@@ -41,8 +41,7 @@ namespace SOF301.Models
         public string Address { get; set; }
 
         public int? CityID { get; set; }
-
-        [Required]
+        
         [StringLength(50)]
         public string Email { get; set; }
 
