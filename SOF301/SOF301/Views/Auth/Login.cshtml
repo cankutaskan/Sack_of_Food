@@ -1,0 +1,16 @@
+﻿@model SOF301.Models.Users
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@Html.ValidationSummary(true)
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(u => u.UserName); <br/>
+    @Html.TextBoxFor(u => u.UserName); <br />
+    @Html.LabelFor(u => u.Password); <br />
+    @Html.TextBoxFor(u => u.Password); <br />
+    <button type="submit">Login</button>
+}
