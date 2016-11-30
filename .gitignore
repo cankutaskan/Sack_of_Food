@@ -2,3 +2,5 @@
 SOF301/.vs/config/applicationhost.config
 SOF301/.vs/SOF301/v14/.suo
 *.suo
+*.mdf
+*.ldf
