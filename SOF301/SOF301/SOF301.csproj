@@ -191,6 +191,7 @@
     <Compile Include="Models\Orders.cs" />
     <Compile Include="Models\Restaurants.cs" />
     <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\SOFEntity.cs" />
     <Compile Include="Models\SofModel.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Models\Users.cs" />
@@ -239,6 +240,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Auth\Register.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

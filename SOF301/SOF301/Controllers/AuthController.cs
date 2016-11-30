@@ -63,5 +63,14 @@ namespace SOF301.Controllers
             authManager.SignOut("ApplicationCookie");
             return RedirectToAction("Login", "Auth");
         }
+
+        
+        public ActionResult Register()
+        {
+
+            ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
+            return View();
+        }
+
     }
 }
