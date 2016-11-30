@@ -121,3 +121,12 @@ C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\Newtonsoft.J
 C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\obj\Debug\SOF301.csprojResolveAssemblyReference.cache
 C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\obj\Debug\SOF301.dll
 C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\obj\Debug\SOF301.pdb
+C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\Microsoft.Owin.dll
+C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\Microsoft.Owin.Security.dll
+C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\Owin.dll
+C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\Microsoft.Owin.xml
+C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\Microsoft.Owin.Security.xml
+C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\Microsoft.Owin.Security.Cookies.xml
