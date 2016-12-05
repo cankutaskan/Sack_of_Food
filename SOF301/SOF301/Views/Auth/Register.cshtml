@@ -15,10 +15,39 @@
     @Html.PasswordFor(u=>u.Password)    <br />
     @Html.LabelFor(u=>u.Email)    <br />
     @Html.TextBoxFor(u=>u.Email)    <br />
+    @Html.LabelFor(u => u.Name) <br />
+    @Html.TextBoxFor(u => u.Name)    <br />
+    @Html.LabelFor(u => u.Surname) <br />
+    @Html.TextBoxFor(u => u.Surname)    <br />
+    @Html.LabelFor(u => u.Telephone) <br />
+    @Html.TextBoxFor(u => u.Telephone)    <br />
+    @Html.LabelFor(u => u.Address) <br />
+    @Html.TextBoxFor(u => u.Address)    <br />
     @Html.LabelFor(u=>u.CityID)    <br />
     @Html.DropDownList("CityID", null, htmlAttributes: new { @class = "form-control", @reqired = "" })    <br />
-    @Html.Label("I am a restaurant owner.")
-    @Html.CheckBox("isRestaurantOwner",false)    <br />
-    
-    <button type="submit">Register</button>
+    <p>
+        I am a restaurant owner.
+        <input type="checkbox" id="isRestaurantOwner" name="isRestaurantOwner" /> <br/>
+    </p>
+    <script>
+        $(document).ready(function () {
+            $("#isRestaurantOwner").change(function (event) {
+                if (this.checked) {
+                    $("#rownerRegister").show();
+                    $("#customerRegister").hide();
+                } else {
+                    $("#rownerRegister").hide();
+                    $("#customerRegister").show();
+                }
+            });
+        });
+    </script>
+
+    <div id="customerRegister" >
+        <button type="submit">Register</button>
+    </div>
+    <div id="rownerRegister" hidden="hidden">
+        <button type="submit">Send Request</button>
+    </div>
+
 }

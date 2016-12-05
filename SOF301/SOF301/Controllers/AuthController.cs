@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SOF301.Models;
 using System.Security.Claims;
+using System.Data.Entity;
 
 namespace SOF301.Controllers
 {
@@ -32,12 +33,13 @@ namespace SOF301.Controllers
             int userId = new SofModel().Users
                 .Where(u => u.UserName == model.UserName && u.Password == model.Password)
                 .Select(u => u.UserID).FirstOrDefault();
+
             if (userId != 0)
             {
                 var identity = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Sid, userId.ToString()),
-                    new Claim(ClaimTypes.Sid, new SofModel().Users.Where(u=>u.UserID == userId).Select(u=>u.RoleID).FirstOrDefault().ToString())
+                    new Claim(ClaimTypes.Sid, userId.ToString()), //user id cookie
+                    new Claim(ClaimTypes.Sid, new SofModel().Users.Where(u=>u.UserID == userId).Select(u=>u.RoleID).FirstOrDefault().ToString()) //role id cookie
                 }, "ApplicationCookie");
 
                 var ctx = Request.GetOwinContext();
@@ -65,10 +67,21 @@ namespace SOF301.Controllers
         }
 
         
-        public ActionResult Register()
+        public ActionResult Register(Users model)
         {
 
             ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
+            if (!ModelState.IsValid) //Checks if input fields have the correct format
+            {
+                Response.Write("model not valid");
+                return View(model); //Returns the view with the input values so that the user doesn't have to retype again
+            }
+            model.RoleID = 3;
+            SOFEntity.getDb().Users.Add(model);
+            SOFEntity.getDb().SaveChanges();
+
+
+
             return View();
         }
 
