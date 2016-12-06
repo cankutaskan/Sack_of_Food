@@ -66,23 +66,37 @@ namespace SOF301.Controllers
             return RedirectToAction("Login", "Auth");
         }
 
-        
+        public ActionResult Register()
+        {
+            ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
+            return View();
+        }
+
+        [HttpPost]
         public ActionResult Register(Users model)
         {
 
             ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
-            if (!ModelState.IsValid) //Checks if input fields have the correct format
+
+            var user = SOFEntity.getDb().Users
+                .Where(u => u.UserName == model.UserName)
+                .Select(u => u).FirstOrDefault();  // if there is no user with given user name
+
+            if (ModelState.IsValid && user == null) //Checks if input fields have the correct format
             {
-                Response.Write("model not valid");
-                return View(model); //Returns the view with the input values so that the user doesn't have to retype again
+                
+                user = model;
+                user.RoleID = 3;
+                SOFEntity.getDb().Users.Add(user);
+                SOFEntity.getDb().SaveChanges();
+
+                return RedirectToAction("Login", "Auth");
             }
-            model.RoleID = 3;
-            SOFEntity.getDb().Users.Add(model);
-            SOFEntity.getDb().SaveChanges();
-
-
-
-            return View();
+            else
+            {
+                ModelState.AddModelError("", "One or more fields have errors.");
+            }
+            return View(model);
         }
 
     }
