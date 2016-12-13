@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SOF301.Models;
 using System.Security.Claims;
+using System.Data.Entity;
 
 namespace SOF301.Controllers
 {
@@ -32,12 +33,13 @@ namespace SOF301.Controllers
             int userId = new SofModel().Users
                 .Where(u => u.UserName == model.UserName && u.Password == model.Password)
                 .Select(u => u.UserID).FirstOrDefault();
+
             if (userId != 0)
             {
                 var identity = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Sid, userId.ToString()),
-                    new Claim(ClaimTypes.Sid, new SofModel().Users.Where(u=>u.UserID == userId).Select(u=>u.RoleID).FirstOrDefault().ToString())
+                    new Claim(ClaimTypes.Sid, userId.ToString()), //user id cookie
+                    new Claim(ClaimTypes.Sid, new SofModel().Users.Where(u=>u.UserID == userId).Select(u=>u.RoleID).FirstOrDefault().ToString()) //role id cookie
                 }, "ApplicationCookie");
 
                 var ctx = Request.GetOwinContext();
@@ -63,5 +65,39 @@ namespace SOF301.Controllers
             authManager.SignOut("ApplicationCookie");
             return RedirectToAction("Login", "Auth");
         }
+
+        public ActionResult Register()
+        {
+            ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(Users model)
+        {
+
+            ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
+
+            var user = SOFEntity.getDb().Users
+                .Where(u => u.UserName == model.UserName)
+                .Select(u => u).FirstOrDefault();  // if there is no user with given user name
+
+            if (ModelState.IsValid && user == null) //Checks if input fields have the correct format
+            {
+                
+                user = model;
+                user.RoleID = 3;
+                SOFEntity.getDb().Users.Add(user);
+                SOFEntity.getDb().SaveChanges();
+
+                return RedirectToAction("Login", "Auth");
+            }
+            else
+            {
+                ModelState.AddModelError("", "One or more fields have errors.");
+            }
+            return View(model);
+        }
+
     }
 }

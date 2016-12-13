@@ -21,7 +21,7 @@ namespace SOF301.Models
         public int? RoleID { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(24)]
         public string UserName { get; set; }
 
         [Required]
