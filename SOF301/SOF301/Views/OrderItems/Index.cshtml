@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SOF301.Models.OrderItems>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Foods.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Orders.Telephone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FoodNumber)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Foods.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Orders.Telephone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FoodNumber)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.OrderItemID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.OrderItemID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.OrderItemID })
+        </td>
+    </tr>
+}
+
+</table>
