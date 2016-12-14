@@ -7,61 +7,27 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SOF301.Models;
-
+using System.Security.Claims;
 namespace SOF301.Controllers
 {
     public class UsersController : Controller
     {
         private SofModel db = new SofModel();
 
-        // GET: Users
-        public ActionResult Index()
-        {
-            var users = db.Users.Include(u => u.Cities).Include(u => u.Roles);
-            return View(users.ToList());
-        }
+     
 
         // GET: Users/Details/5
         public ActionResult Details(int? id)
+          
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Users users = db.Users.Find(id);
-            if (users == null)
-            {
-                return HttpNotFound();
-            }
+            var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
+          
+            Users users = db.Users.Find(userID);
+
             return View(users);
         }
 
-        // GET: Users/Create
-        public ActionResult Create()
-        {
-            ViewBag.CityID = new SelectList(db.Cities, "CityID", "Name");
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name");
-            return View();
-        }
-
-        // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,RoleID,UserName,Password,Name,Surname,Telephone,Address,CityID,Email")] Users users)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(users);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.CityID = new SelectList(db.Cities, "CityID", "Name", users.CityID);
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name", users.RoleID);
-            return View(users);
-        }
+   
 
         // GET: Users/Edit/5
         public ActionResult Edit(int? id)
@@ -70,7 +36,8 @@ namespace SOF301.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Users users = db.Users.Find(id);
+            var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
+            Users users = db.Users.Find(userID);
             if (users == null)
             {
                 return HttpNotFound();
@@ -84,45 +51,22 @@ namespace SOF301.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public ActionResult Edit([Bind(Include = "UserID,RoleID,UserName,Password,Name,Surname,Telephone,Address,CityID,Email")] Users users)
         {
+        
             if (ModelState.IsValid)
             {
                 db.Entry(users).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details","Users");
             }
             ViewBag.CityID = new SelectList(db.Cities, "CityID", "Name", users.CityID);
             ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name", users.RoleID);
             return View(users);
         }
 
-        // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Users users = db.Users.Find(id);
-            if (users == null)
-            {
-                return HttpNotFound();
-            }
-            return View(users);
-        }
 
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Users users = db.Users.Find(id);
-            db.Users.Remove(users);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {

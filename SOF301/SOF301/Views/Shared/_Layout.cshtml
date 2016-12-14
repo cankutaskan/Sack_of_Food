@@ -38,7 +38,7 @@
                         
                     <li>@Html.ActionLink("Home", "", "")</li>
                     <li>@Html.ActionLink("My Orders", "Index", "Orders")</li>
-                    <li>@Html.ActionLink("Profile", "", "")</li>
+                    <li>@Html.ActionLink("Profile", "Details", "Users")</li>
                     }
 
                             if (c.Value.Equals("2")) { 
@@ -46,13 +46,13 @@
                     <li>@Html.ActionLink("Orders", "", "")</li>
                     <li>@Html.ActionLink("My Restaurant", "", "")</li>
                     <li>@Html.ActionLink("Foods", "", "")</li>
-                    <li>@Html.ActionLink("Profile", "", "")</li>
+                    <li>@Html.ActionLink("Profile", "Details", "Users")</li>
                     }
                             if (c.Value.Equals("1")) { 
 
                     <li>@Html.ActionLink("Requests", "", "")</li>
                     <li>@Html.ActionLink("Restaurants", "", "")</li>
-                    <li>@Html.ActionLink("Profile", "", "")</li>
+                    <li>@Html.ActionLink("Profile", "Details", "Users")</li>
                     }
                     }
                     }
