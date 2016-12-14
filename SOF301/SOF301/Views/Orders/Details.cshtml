@@ -1,82 +1,43 @@
-﻿@model SOF301.Models.Orders
+﻿
 
-@{
-    ViewBag.Title = "Details";
-}
+@model IEnumerable<SOF301.Models.OrderItems>
 
-<h2>Details</h2>
 
-<div>
-    <h4>Orders</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Users.UserName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Users.UserName)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalPrice)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TotalPrice)
-        </dd>
+<h2>Order Items</h2>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Telephone)
-        </dt>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Foods.Name)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.FoodNumber)
+        </th>
+        <th></th>
+    </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.Telephone)
-        </dd>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Foods.Name)
+            </td>
+          
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodNumber)
+            </td>
+          
+        </tr>
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PaymentType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PaymentType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OrderStatus)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrderStatus)
-        </dd>
-
-    </dl>
-</div>
+</table>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |
+  
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<SOF301.Models.Orders>
 
-@{
-    ViewBag.Title = "Index";
-}
+
 
 <h2>My Orders</h2>
 
@@ -56,7 +54,7 @@
       
         <td>
          
-            @Html.ActionLink("Items", "Details", new { id=item.OrderID }) 
+            @Html.ActionLink("OrderItems", "Details", new { id=item.OrderID }) 
          
         </td>
     </tr>

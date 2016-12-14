@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SOF301.Models;
+using System.Security.Claims;
 
 namespace SOF301.Controllers
 {
@@ -17,28 +18,30 @@ namespace SOF301.Controllers
         // GET: Orders
         public ActionResult Index()
         {
-            var orders = db.Orders.Include(o => o.Users);
+
+         
+           
+            var userID =int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
+
+          
+            var orders = db.Orders.Where(o => o.UserID==userID);
             return View(orders.ToList());
         }
 
-        // GET: Orders/Details/5
+     
+
+
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Orders orders = db.Orders.Find(id);
-            if (orders == null)
-            {
-                return HttpNotFound();
-            }
-            return View(orders);
+            var OrderID = db.OrderItems.Find(id).OrderID;
+            var list = db.OrderItems.Where(o => o.OrderID == OrderID).ToList();
+
+            return View(list);
         }
-
-
-      
-
     
 
         protected override void Dispose(bool disposing)
