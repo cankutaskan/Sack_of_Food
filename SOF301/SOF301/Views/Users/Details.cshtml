@@ -1,7 +1,7 @@
 ﻿@model SOF301.Models.Users
 
 @{
-   
+    ViewBag.Title = "Details";
 }
 
 <h2>Profile</h2>
@@ -10,7 +10,8 @@
     <h4></h4>
     <hr />
     <dl class="dl-horizontal">
-     
+       
+        
 
         <dt>
             @Html.DisplayNameFor(model => model.UserName)
@@ -20,7 +21,7 @@
             @Html.DisplayFor(model => model.UserName)
         </dd>
 
-      
+       
 
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -53,6 +54,14 @@
         <dd>
             @Html.DisplayFor(model => model.Address)
         </dd>
+        <dt>
+           City
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cities.Name)
+        </dd>
+
 
         <dt>
             @Html.DisplayNameFor(model => model.Email)
@@ -65,6 +74,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Users", new { id = Model.UserID }) 
-   
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserID }) 
+  
 </p>

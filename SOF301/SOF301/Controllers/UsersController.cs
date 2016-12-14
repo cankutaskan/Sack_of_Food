@@ -26,18 +26,14 @@ namespace SOF301.Controllers
 
             return View(users);
         }
-
-   
-
-        // GET: Users/Edit/5
+        // GET: Users1/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
-            Users users = db.Users.Find(userID);
+            Users users = db.Users.Find(id);
             if (users == null)
             {
                 return HttpNotFound();
@@ -47,19 +43,18 @@ namespace SOF301.Controllers
             return View(users);
         }
 
-        // POST: Users/Edit/5
+        // POST: Users1/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-       
+
         public ActionResult Edit([Bind(Include = "UserID,RoleID,UserName,Password,Name,Surname,Telephone,Address,CityID,Email")] Users users)
         {
-        
             if (ModelState.IsValid)
             {
                 db.Entry(users).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Details","Users");
+                return RedirectToAction("Details");
             }
             ViewBag.CityID = new SelectList(db.Cities, "CityID", "Name", users.CityID);
             ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name", users.RoleID);
@@ -67,6 +62,7 @@ namespace SOF301.Controllers
         }
 
 
+ 
 
         protected override void Dispose(bool disposing)
         {
