@@ -20,6 +20,7 @@ namespace SOF301.Models
         [StringLength(50)]
         public string Name { get; set; }
 
+        
         public int? CityID { get; set; }
 
         public int? DistrictID { get; set; }

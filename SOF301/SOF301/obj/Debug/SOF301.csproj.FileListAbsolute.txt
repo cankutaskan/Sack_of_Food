@@ -134,6 +134,10 @@ C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.dll
 C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.Mvc.dll
 C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.xml
 C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.Mvc.xml
+C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.dll
+C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.Mvc.dll
+C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.xml
+C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.Mvc.xml
 C:\Users\Emine\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\ApplicationInsights.config
 C:\Users\Emine\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\roslyn\csc.exe
 C:\Users\Emine\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll

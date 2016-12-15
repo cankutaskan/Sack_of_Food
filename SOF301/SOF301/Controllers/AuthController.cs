@@ -46,9 +46,6 @@ namespace SOF301.Controllers
                 var authManager = ctx.Authentication;
                 authManager.SignIn(identity);
 
-
-
-
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -113,12 +110,14 @@ namespace SOF301.Controllers
                     var rest = SOFEntity.getDb().Restaurants
                         .Where(r => r.Name == model.Restaurants.Name)
                         .Select(r => r).FirstOrDefault();
-                    if (rest == null)
+                        
+                    if(rest == null)
+                    
                     {
                         rest = model.Restaurants;
                         rest.UserID = user.UserID;
                         rest.RestaurantStatu = false;
-
+                        
                         SOFEntity.getDb().Restaurants.Add(rest);
                         SOFEntity.getDb().SaveChanges();
 
@@ -129,7 +128,6 @@ namespace SOF301.Controllers
                         ModelState.AddModelError("", "Restaurant name already exist.");
                     }
                 }
-
             }
             else
             {
