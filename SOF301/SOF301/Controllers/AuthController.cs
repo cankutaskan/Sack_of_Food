@@ -16,10 +16,10 @@ namespace SOF301.Controllers
         [HttpGet]
         public ActionResult Login(string url)
         {
-            
+
             return View();
         }
-        
+
         [HttpPost]
         public ActionResult Login(Users model)
         {
@@ -45,11 +45,8 @@ namespace SOF301.Controllers
                 var ctx = Request.GetOwinContext();
                 var authManager = ctx.Authentication;
                 authManager.SignIn(identity);
-                
-                
-                
 
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -78,7 +75,7 @@ namespace SOF301.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(UserRestaurantViewModel model, bool isRestaurantOwner = false)
+        public ActionResult Register(RegisterViewModel model, bool isRestaurantOwner = false)
         {
 
             ViewBag.UserCityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
@@ -113,12 +110,14 @@ namespace SOF301.Controllers
                     var rest = SOFEntity.getDb().Restaurants
                         .Where(r => r.Name == model.Restaurants.Name)
                         .Select(r => r).FirstOrDefault();
+                        
                     if(rest == null)
+                    
                     {
                         rest = model.Restaurants;
                         rest.UserID = user.UserID;
                         rest.RestaurantStatu = false;
-
+                        
                         SOFEntity.getDb().Restaurants.Add(rest);
                         SOFEntity.getDb().SaveChanges();
 
@@ -129,7 +128,6 @@ namespace SOF301.Controllers
                         ModelState.AddModelError("", "Restaurant name already exist.");
                     }
                 }
-                
             }
             else
             {
