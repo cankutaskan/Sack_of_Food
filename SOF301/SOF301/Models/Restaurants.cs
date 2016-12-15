@@ -29,8 +29,10 @@ namespace SOF301.Models
 
         public int? UserID { get; set; }
 
+        [DataType(DataType.Time)]
         public TimeSpan? StartingHour { get; set; }
 
+        [DataType(DataType.Time)]
         public TimeSpan? FinishingHour { get; set; }
 
         public bool? RestaurantStatu { get; set; }

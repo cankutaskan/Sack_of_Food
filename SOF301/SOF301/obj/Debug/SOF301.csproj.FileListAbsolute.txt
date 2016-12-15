@@ -204,3 +204,7 @@ C:\Users\Emine\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\Newtonsoft.Json.x
 C:\Users\Emine\Documents\GitHub\Sack_of_Food\SOF301\SOF301\obj\Debug\SOF301.csprojResolveAssemblyReference.cache
 C:\Users\Emine\Documents\GitHub\Sack_of_Food\SOF301\SOF301\obj\Debug\SOF301.dll
 C:\Users\Emine\Documents\GitHub\Sack_of_Food\SOF301\SOF301\obj\Debug\SOF301.pdb
+C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.dll
+C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.Mvc.dll
+C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.xml
+C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.Mvc.xml
