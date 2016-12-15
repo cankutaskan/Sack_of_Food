@@ -1,34 +1,15 @@
-﻿@model SOF301.Models.Users
+﻿@model SOF301.Models.UserRestaurantViewModel
 @{
     ViewBag.Title = "Register";
 }
 
-<h2>Register</h2>
+<h1>Register</h1>
 
 
 @Html.ValidationSummary(true)
 @using (Html.BeginForm())
 {
-    @Html.LabelFor(u=>u.UserName) <br/>
-    @Html.TextBoxFor(u=>u.UserName)    <br />
-    @Html.LabelFor(u=>u.Password)    <br />
-    @Html.PasswordFor(u=>u.Password)    <br />
-    @Html.LabelFor(u=>u.Email)    <br />
-    @Html.TextBoxFor(u=>u.Email)    <br />
-    @Html.LabelFor(u => u.Name) <br />
-    @Html.TextBoxFor(u => u.Name)    <br />
-    @Html.LabelFor(u => u.Surname) <br />
-    @Html.TextBoxFor(u => u.Surname)    <br />
-    @Html.LabelFor(u => u.Telephone) <br />
-    @Html.TextBoxFor(u => u.Telephone)    <br />
-    @Html.LabelFor(u => u.Address) <br />
-    @Html.TextBoxFor(u => u.Address)    <br />
-    @Html.LabelFor(u=>u.CityID)    <br />
-    @Html.DropDownList("CityID", null, htmlAttributes: new { @class = "form-control", @reqired = "" })    <br />
-    <p>
-        I am a restaurant owner.
-        <input type="checkbox" id="isRestaurantOwner" name="isRestaurantOwner" /> <br/>
-    </p>
+   
     <script>
         $(document).ready(function () {
             $("#isRestaurantOwner").change(function (event) {
@@ -43,11 +24,56 @@
         });
     </script>
 
-    <div id="customerRegister" >
-        <button type="submit">Register</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>User Details</h2> <br/>
+                @Html.LabelFor(u => u.Users.UserName) <br />
+                @Html.TextBoxFor(u => u.Users.UserName)    <br />
+                @Html.LabelFor(u => u.Users.Password)    <br />
+                @Html.PasswordFor(u => u.Users.Password)    <br />
+                @Html.LabelFor(u => u.Users.Email)    <br />
+                @Html.TextBoxFor(u => u.Users.Email)    <br />
+                @Html.LabelFor(u => u.Users.Name) <br />
+                @Html.TextBoxFor(u => u.Users.Name)    <br />
+                @Html.LabelFor(u => u.Users.Surname) <br />
+                @Html.TextBoxFor(u => u.Users.Surname)    <br />
+                @Html.LabelFor(u => u.Users.Telephone) <br />
+                @Html.TextBoxFor(u => u.Users.Telephone)    <br />
+                @Html.LabelFor(u => u.Users.Address) <br />
+                @Html.TextBoxFor(u => u.Users.Address)    <br />
+                @Html.LabelFor(u => u.Users.CityID)    <br />
+                @Html.DropDownListFor(u => u.Users.CityID, ViewBag.UserCityID as IEnumerable<SelectListItem>) <br/>
+                @*@Html.DropDownList("UserCityID", null, htmlAttributes: new { @class = "form-control", @reqired = "" })    <br />*@
+                <p>
+                    <input type="checkbox" id="isRestaurantOwner" name="isRestaurantOwner" value="true" /> 
+                    I am a restaurant owner.
+                </p>
+                <div id="customerRegister">
+                    <button type="submit">Register</button>
+                </div>
+            </div>
+            <div class="col-md-6" id="rownerRegister" hidden="hidden">
+                <h2>Restaurant Details</h2> <br />
+                @Html.LabelFor(r => r.Restaurants.Name)<br />
+                @Html.TextBoxFor(r => r.Restaurants.Name)<br />
+                @Html.LabelFor(r => r.Restaurants.CityID)<br />
+                @Html.DropDownListFor(r => r.Restaurants.CityID, ViewBag.RestaurantCityID as IEnumerable<SelectListItem>) <br/>
+                @*@Html.DropDownList("RestaurantCityID", null, htmlAttributes: new { @class = "form-control", @reqired = "" })    <br />*@
+                @Html.LabelFor(r => r.Restaurants.DistrictID)<br />
+                @Html.DropDownListFor(r => r.Restaurants.DistrictID, ViewBag.RestaurantDistrictID as IEnumerable<SelectListItem>) <br/>
+                @*@Html.DropDownList("RestaurantDistrictID", null, htmlAttributes: new { @class = "form-control", @reqired = "" })    <br />*@
+                @Html.LabelFor(r => r.Restaurants.Address)<br />
+                @Html.TextBoxFor(r => r.Restaurants.Address)<br />
+                @Html.LabelFor(r => r.Restaurants.StartingHour)<br />
+                @Html.EditorFor(r => r.Restaurants.StartingHour)<br />
+                @Html.LabelFor(r => r.Restaurants.FinishingHour)<br />
+                @Html.EditorFor(r => r.Restaurants.FinishingHour)<br />
+                <br /> 
+                <button type="submit">Send Request</button>
+            </div>
+        </div>
     </div>
-    <div id="rownerRegister" hidden="hidden">
-        <button type="submit">Send Request</button>
-    </div>
+    
 
 }

@@ -203,6 +203,7 @@
     <Compile Include="Models\SOFEntity.cs" />
     <Compile Include="Models\SofModel.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
+    <Compile Include="Models\UserRestaurantViewModel.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

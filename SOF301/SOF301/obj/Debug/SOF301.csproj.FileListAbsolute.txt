@@ -134,3 +134,7 @@ C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.dll
 C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.Mvc.dll
 C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.xml
 C:\Users\cyclone\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.Mvc.xml
+C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.dll
+C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.Mvc.dll
+C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.xml
+C:\Users\gokhan.nas\Documents\GitHub\Sack_of_Food\SOF301\SOF301\bin\PagedList.Mvc.xml
