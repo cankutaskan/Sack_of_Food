@@ -68,9 +68,9 @@ namespace SOF301.Controllers
         {
             ViewBag.UserCityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
             ViewBag.RestaurantCityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
-            //ViewBag.UserDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
+            ViewBag.UserDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
             ViewBag.RestaurantDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
-            //js callback
+            //try to use js callback to show City's Districts
             return View();
         }
 
@@ -80,7 +80,7 @@ namespace SOF301.Controllers
 
             ViewBag.UserCityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
             ViewBag.RestaurantCityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
-            //ViewBag.UserDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
+            ViewBag.UserDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
             ViewBag.RestaurantDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
 
             var user = SOFEntity.getDb().Users
@@ -101,31 +101,44 @@ namespace SOF301.Controllers
                 }
                 else
                 {
-                    user = model.Users;
-                    user.RoleID = 2;                    //makes it owner
-
-                    SOFEntity.getDb().Users.Add(user);
-                    SOFEntity.getDb().SaveChanges();
-
-                    var rest = SOFEntity.getDb().Restaurants
-                        .Where(r => r.Name == model.Restaurants.Name)
-                        .Select(r => r).FirstOrDefault();
-                        
-                    if(rest == null)
-                    
+                    if (string.IsNullOrWhiteSpace(model.Restaurants.Name))
                     {
-                        rest = model.Restaurants;
-                        rest.UserID = user.UserID;
-                        rest.RestaurantStatu = false;
-                        
-                        SOFEntity.getDb().Restaurants.Add(rest);
+                        user = model.Users;
+                        user.RoleID = 2;                    //makes it owner
+
+                        SOFEntity.getDb().Users.Add(user);
                         SOFEntity.getDb().SaveChanges();
 
-                        return RedirectToAction("Login", "Auth");
+                        var rest = SOFEntity.getDb().Restaurants
+                            .Where(r => r.Name == model.Restaurants.Name)
+                            .Select(r => r).FirstOrDefault();
+
+                        if (rest == null)
+
+                        {
+                            rest = model.Restaurants;
+                            rest.UserID = user.UserID;
+                            rest.RestaurantStatu = false;
+
+                            SOFEntity.getDb().Restaurants.Add(rest);
+                            SOFEntity.getDb().SaveChanges();
+
+                            Requests r = new Requests();
+                            r.UserID = user.UserID;
+                            r.RestaurantID = rest.RestaurantID;
+                            SOFEntity.getDb().Requests.Add(r);
+                            SOFEntity.getDb().SaveChanges();
+
+                            return RedirectToAction("Login", "Auth");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Restaurant name already exist.");
+                        }
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Restaurant name already exist.");
+                        ModelState.AddModelError("", "Restaurant name can't be blank.");
                     }
                 }
             }

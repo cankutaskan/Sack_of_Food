@@ -127,6 +127,7 @@ textarea {
 }
 button {
   overflow: visible;
+  color : black;
 }
 button,
 select {

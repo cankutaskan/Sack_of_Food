@@ -17,6 +17,7 @@ namespace SOF301.Models
         public virtual DbSet<Foods> Foods { get; set; }
         public virtual DbSet<OrderItems> OrderItems { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<Requests> Requests { get; set; }
         public virtual DbSet<Restaurants> Restaurants { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
@@ -24,6 +25,15 @@ namespace SOF301.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Restaurants>()
+                .HasMany(e => e.Requests)
+                .WithRequired(e => e.Restaurants)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Users>()
+                .HasMany(e => e.Requests)
+                .WithRequired(e => e.Users)
+                .WillCascadeOnDelete(false);
         }
     }
 }

@@ -200,12 +200,13 @@
     <Compile Include="Models\Foods.cs" />
     <Compile Include="Models\OrderItems.cs" />
     <Compile Include="Models\Orders.cs" />
+    <Compile Include="Models\Requests.cs" />
     <Compile Include="Models\Restaurants.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\SOFEntity.cs" />
+    <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\SofModel.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
-    <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -12,6 +12,7 @@ namespace SOF301.Models
         public Districts()
         {
             Restaurants = new HashSet<Restaurants>();
+            Users = new HashSet<Users>();
         }
 
         [Key]
@@ -26,5 +27,8 @@ namespace SOF301.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Restaurants> Restaurants { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Users> Users { get; set; }
     }
 }
