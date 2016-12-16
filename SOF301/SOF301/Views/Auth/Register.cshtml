@@ -10,20 +10,7 @@
 @Html.ValidationSummary(true)
 @using (Html.BeginForm())
 {
-    <script>
-        $(document).ready(function () {
-            $("#isRestaurantOwner").change(function (event) {
-                if (this.checked) {
-                    $("#rownerRegister").show();
-                    $("#customerRegister").hide();
-                } else {
-                    $("#rownerRegister").hide();
-                    $("#customerRegister").show();
-                }
-            });
-        });
-    </script>
-
+    
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -44,7 +31,10 @@
                 @Html.TextBoxFor(u => u.Users.Address)    <br />
                 @Html.LabelFor(u => u.Users.CityID)    <br />
                 @Html.DropDownListFor(u => u.Users.CityID, ViewBag.UserCityID as IEnumerable<SelectListItem>) <br />
-                @*@Html.DropDownList("UserCityID", null, htmlAttributes: new { @class = "form-control", @reqired = "" })    <br />*@
+                @Html.LabelFor(u => u.Users.DistrictID)    <br />
+                @Html.DropDownListFor(u => u.Users.DistrictID, ViewBag.UserDistrictID as IEnumerable<SelectListItem>) <br />
+
+
                 <p>
                     <input type="checkbox" id="isRestaurantOwner" name="isRestaurantOwner" value="true" />
                     I am a restaurant owner.
@@ -59,10 +49,8 @@
                 @Html.TextBoxFor(r => r.Restaurants.Name)<br />
                 @Html.LabelFor(r => r.Restaurants.CityID)<br />
                 @Html.DropDownListFor(r => r.Restaurants.CityID, ViewBag.RestaurantCityID as IEnumerable<SelectListItem>) <br />
-                @*@Html.DropDownList("RestaurantCityID", null, htmlAttributes: new { @class = "form-control", @reqired = "" })    <br />*@
                 @Html.LabelFor(r => r.Restaurants.DistrictID)<br />
                 @Html.DropDownListFor(r => r.Restaurants.DistrictID, ViewBag.RestaurantDistrictID as IEnumerable<SelectListItem>) <br />
-                @*@Html.DropDownList("RestaurantDistrictID", null, htmlAttributes: new { @class = "form-control", @reqired = "" })    <br />*@
                 @Html.LabelFor(r => r.Restaurants.Address)<br />
                 @Html.TextBoxFor(r => r.Restaurants.Address)<br />
                 @Html.LabelFor(r => r.Restaurants.StartingHour)<br />
@@ -74,7 +62,19 @@
             </div>
         </div>
     </div>
-    
 
+    <script>
+        $(document).ready(function () {
+            $("#isRestaurantOwner").change(function (event) {
+                if (this.checked) {
+                    $("#rownerRegister").show();
+                    $("#customerRegister").hide();
+                } else {
+                    $("#rownerRegister").hide();
+                    $("#customerRegister").show();
+                }
+            });
+        });
+    </script>
 
 }
