@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SOF301.Models;
 using System.Security.Claims;
 using System.Data.Entity;
+using SOF301.Tools;
 
 namespace SOF301.Controllers
 {
@@ -29,28 +30,39 @@ namespace SOF301.Controllers
                 Response.Write("model not valid");
                 return View(model); //Returns the view with the input values so that the user doesn't have to retype again
             }
+            
 
-            int userId = new SofModel().Users
-                .Where(u => u.UserName == model.UserName && u.Password == model.Password)
-                .Select(u => u.UserID).FirstOrDefault();
+            Users user = SOFEntity.getDb().Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
 
-            if (userId != 0)
+            if (user != null)
             {
-                var identity = new ClaimsIdentity(new[]
+                var decryptedPassword = CustomDecrypt.Decrypt(user.Password);
+
+                if (model.Password == decryptedPassword)
                 {
-                    new Claim(ClaimTypes.Sid, userId.ToString()), //user id cookie
-                    new Claim(ClaimTypes.Role, new SofModel().Users.Where(u=>u.UserID == userId).Select(u=>u.RoleID).FirstOrDefault().ToString()) //role id cookie
-                }, "ApplicationCookie");
+                    var identity = new ClaimsIdentity(new[]
+                    {
+                    new Claim(ClaimTypes.Sid, user.UserID.ToString()), //user id cookie
+                    new Claim(ClaimTypes.Role, user.RoleID.ToString()) //role id cookie
+                    }, "ApplicationCookie");
 
-                var ctx = Request.GetOwinContext();
-                var authManager = ctx.Authentication;
-                authManager.SignIn(identity);
+                    var ctx = Request.GetOwinContext();
+                    var authManager = ctx.Authentication;
+                    authManager.SignIn(identity);
 
-                return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
+                
+                    
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid Password!");
+                    return View(model);
+                }
             }
             else
             {
-                ModelState.AddModelError("", "Invalid username or password!");
+                ModelState.AddModelError("", "Invalid user name!");
                 return View(model);
             }
         }
@@ -89,9 +101,16 @@ namespace SOF301.Controllers
 
             if (ModelState.IsValid && user == null) //Checks if input fields have the correct format
             {
+                if (string.IsNullOrWhiteSpace(model.Users.Email))
+                {
+                    ModelState.AddModelError("", "Email can not be blank!");
+                    return View(model);
+                }
                 if (!isRestaurantOwner)
                 {
                     user = model.Users;
+                    var encryptedPassword = CustomEnrypt.Encrypt(user.Password);
+                    user.Password = encryptedPassword;
                     user.RoleID = 3;                    //makes it customer
                     SOFEntity.getDb().Users.Add(user);
                     SOFEntity.getDb().SaveChanges();
