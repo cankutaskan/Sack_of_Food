@@ -1,0 +1,79 @@
+﻿@model IEnumerable<SOF301.Models.Foods>
+   @Styles.Render("/Content/RestaurantPage.css")
+
+@{
+    ViewBag.Title = "RestaurantPage";
+}
+
+<h2>RestaurantPage</h2>
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <table class="table">
+                <tr>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FoodStatu)
+                    </th>
+
+                </tr>
+
+                @foreach (var item in Model)
+            {
+                if (item.FoodStatu != null && item.FoodStatu == true)
+                {
+                        <tr>
+
+                            <td>
+                           @ViewBag.Restaurant
+
+                                    @Html.ActionLink("add", "ItemBasket", null, new { @class = "addButton" })
+                                    @Html.DisplayFor(modelItem => item.Name)
+
+                              
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td> haslkdjaskldjdkjasldjsldjlasdsldlaskdjlasdjlasdjljdasl </td>
+
+                        </tr>
+
+
+                    }
+
+                }
+
+
+
+            </table>
+
+        </div>
+        <div class="col-md-6">
+            @{
+                var order = new SOF301.Models.SofModel().OrderItems;
+            }
+            <div id="partial">
+                @Html.Partial("ItemBasket", order)
+            </div>
+        
+
+        </div>
+    </div>
+
+</div>
+

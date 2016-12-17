@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Sack Of Food</title>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
@@ -22,6 +24,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+
                       @if (User.Identity.IsAuthenticated)
                           {
                     
@@ -55,6 +58,7 @@
                     <li>@Html.ActionLink("Profile", "Details", "Users")</li>
                     }
                     }
+
                     }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -74,7 +78,7 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
+     
         <footer>
             <p>&copy; @DateTime.Now.Year - Sack Of Food</p>
         </footer>

@@ -40,11 +40,13 @@ namespace SOF301.Controllers
 
                 if (model.Password == decryptedPassword)
                 {
+
                     var identity = new ClaimsIdentity(new[]
                     {
                     new Claim(ClaimTypes.Sid, user.UserID.ToString()), //user id cookie
                     new Claim(ClaimTypes.Role, user.RoleID.ToString()) //role id cookie
                     }, "ApplicationCookie");
+
 
                     var ctx = Request.GetOwinContext();
                     var authManager = ctx.Authentication;

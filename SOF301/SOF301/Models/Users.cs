@@ -43,6 +43,7 @@ namespace SOF301.Models
 
         public int? CityID { get; set; }
 
+
         [StringLength(50)]
         public string Email { get; set; }
 
