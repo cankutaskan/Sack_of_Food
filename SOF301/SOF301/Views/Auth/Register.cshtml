@@ -1,0 +1,80 @@
+
+﻿@model SOF301.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<h1>Register</h1>
+
+
+@Html.ValidationSummary(true)
+@using (Html.BeginForm())
+{
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>User Details</h2> <br />
+                @Html.LabelFor(u => u.Users.UserName) <br />
+                @Html.TextBoxFor(u => u.Users.UserName)    <br />
+                @Html.LabelFor(u => u.Users.Password)    <br />
+                @Html.PasswordFor(u => u.Users.Password)    <br />
+                @Html.LabelFor(u => u.Users.Email)    <br />
+                @Html.TextBoxFor(u => u.Users.Email)    <br />
+                @Html.LabelFor(u => u.Users.Name) <br />
+                @Html.TextBoxFor(u => u.Users.Name)    <br />
+                @Html.LabelFor(u => u.Users.Surname) <br />
+                @Html.TextBoxFor(u => u.Users.Surname)    <br />
+                @Html.LabelFor(u => u.Users.Telephone) <br />
+                @Html.TextBoxFor(u => u.Users.Telephone)    <br />
+                @Html.LabelFor(u => u.Users.Address) <br />
+                @Html.TextBoxFor(u => u.Users.Address)    <br />
+                @Html.LabelFor(u => u.Users.CityID)    <br />
+                @Html.DropDownListFor(u => u.Users.CityID, ViewBag.UserCityID as IEnumerable<SelectListItem>) <br />
+                @Html.LabelFor(u => u.Users.DistrictID)    <br />
+                @Html.DropDownListFor(u => u.Users.DistrictID, ViewBag.UserDistrictID as IEnumerable<SelectListItem>) <br />
+
+
+                <p>
+                    <input type="checkbox" id="isRestaurantOwner" name="isRestaurantOwner" value="true" />
+                    I am a restaurant owner.
+                </p>
+                <div id="customerRegister">
+                    <button type="submit">Register</button>
+                </div>
+            </div>
+            <div class="col-md-6" id="rownerRegister" hidden="hidden">
+                <h2>Restaurant Details</h2> <br />
+                @Html.LabelFor(r => r.Restaurants.Name)<br />
+                @Html.TextBoxFor(r => r.Restaurants.Name)<br />
+                @Html.LabelFor(r => r.Restaurants.CityID)<br />
+                @Html.DropDownListFor(r => r.Restaurants.CityID, ViewBag.RestaurantCityID as IEnumerable<SelectListItem>) <br />
+                @Html.LabelFor(r => r.Restaurants.DistrictID)<br />
+                @Html.DropDownListFor(r => r.Restaurants.DistrictID, ViewBag.RestaurantDistrictID as IEnumerable<SelectListItem>) <br />
+                @Html.LabelFor(r => r.Restaurants.Address)<br />
+                @Html.TextBoxFor(r => r.Restaurants.Address)<br />
+                @Html.LabelFor(r => r.Restaurants.StartingHour)<br />
+                @Html.EditorFor(r => r.Restaurants.StartingHour)<br />
+                @Html.LabelFor(r => r.Restaurants.FinishingHour)<br />
+                @Html.EditorFor(r => r.Restaurants.FinishingHour)<br />
+                <br />
+                <button type="submit">Send Request</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#isRestaurantOwner").change(function (event) {
+                if (this.checked) {
+                    $("#rownerRegister").show();
+                    $("#customerRegister").hide();
+                } else {
+                    $("#rownerRegister").hide();
+                    $("#customerRegister").show();
+                }
+            });
+        });
+    </script>
+
+}
