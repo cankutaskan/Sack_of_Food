@@ -12,6 +12,7 @@ namespace SOF301.Models
         public Users()
         {
             Orders = new HashSet<Orders>();
+            Requests = new HashSet<Requests>();
             Restaurants = new HashSet<Restaurants>();
         }
 
@@ -41,14 +42,22 @@ namespace SOF301.Models
         public string Address { get; set; }
 
         public int? CityID { get; set; }
-        
+
+       // [Required]
         [StringLength(50)]
         public string Email { get; set; }
 
+        public int? DistrictID { get; set; }
+
         public virtual Cities Cities { get; set; }
+
+        public virtual Districts Districts { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Requests> Requests { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Restaurants> Restaurants { get; set; }

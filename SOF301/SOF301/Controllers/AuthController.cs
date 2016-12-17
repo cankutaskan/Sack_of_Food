@@ -37,7 +37,7 @@ namespace SOF301.Controllers
                 var identity = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Sid, userId.ToString()),
-                    new Claim(ClaimTypes.Sid, new SofModel().Users.Where(u=>u.UserID == userId).Select(u=>u.RoleID).FirstOrDefault().ToString())
+                    new Claim(ClaimTypes.Role, new SofModel().Users.Where(u=>u.UserID == userId).Select(u=>u.RoleID).FirstOrDefault().ToString())
                 }, "ApplicationCookie");
 
                 var ctx = Request.GetOwinContext();
