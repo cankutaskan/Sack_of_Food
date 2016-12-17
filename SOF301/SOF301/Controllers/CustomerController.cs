@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
-using SOF301.CustomTools;
+
 using System.Security.Claims;
 
 namespace SOF301.Controllers
