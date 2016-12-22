@@ -274,7 +274,25 @@ namespace SOF301.Controllers
             return View(users);
         }
 
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult ForgotPassword([Bind(Include = "UserID,UserName,Email")] Users u)
+        {
+            Users user = SOFEntity.getDb().Users.Where(t => t.UserName == u.UserName).First();
+            if (user != null)
+            {
+                MailHandler.SendForgottenPassword(user);
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid username!");
+            }
+            return View(u);
+        }
         
 
     }
