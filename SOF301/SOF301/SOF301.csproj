@@ -212,6 +212,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\CustomDecrypt.cs" />
     <Compile Include="Tools\CustomEncrypt.cs" />
+    <Compile Include="Tools\MailHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\FoodOrder.mdf" />
@@ -284,6 +285,7 @@
     <Content Include="Views\TempOrders\Details.cshtml" />
     <Content Include="Views\TempOrders\Edit.cshtml" />
     <Content Include="Views\TempOrders\Index.cshtml" />
+    <Content Include="Views\Auth\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Admin\" />
