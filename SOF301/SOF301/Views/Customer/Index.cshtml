@@ -23,7 +23,7 @@
             @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            Name
+            District
         </th>
         <th>
             Starting Hour
@@ -40,7 +40,8 @@
         <tr>
 
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.ActionLink(item.Name, "RestaurantPage", new { RestaurantID = item.RestaurantID })
+               
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Address)

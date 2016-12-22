@@ -12,6 +12,7 @@ namespace SOF301.Models
         public Restaurants()
         {
             Foods = new HashSet<Foods>();
+            Requests = new HashSet<Requests>();
         }
 
         [Key]
@@ -29,8 +30,10 @@ namespace SOF301.Models
 
         public int? UserID { get; set; }
 
+        [DataType(DataType.Time)]
         public TimeSpan? StartingHour { get; set; }
 
+        [DataType(DataType.Time)]
         public TimeSpan? FinishingHour { get; set; }
 
         public bool? RestaurantStatu { get; set; }
@@ -41,6 +44,9 @@ namespace SOF301.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Foods> Foods { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Requests> Requests { get; set; }
 
         public virtual Users Users { get; set; }
     }

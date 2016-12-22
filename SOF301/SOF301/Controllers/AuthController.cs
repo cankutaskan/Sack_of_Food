@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SOF301.Models;
 using System.Security.Claims;
 using System.Data.Entity;
+using SOF301.Tools;
 
 namespace SOF301.Controllers
 {
@@ -16,10 +17,10 @@ namespace SOF301.Controllers
         [HttpGet]
         public ActionResult Login(string url)
         {
-            
+
             return View();
         }
-        
+
         [HttpPost]
         public ActionResult Login(Users model)
         {
@@ -30,29 +31,67 @@ namespace SOF301.Controllers
                 return View(model); //Returns the view with the input values so that the user doesn't have to retype again
             }
 
-            int userId = new SofModel().Users
-                .Where(u => u.UserName == model.UserName && u.Password == model.Password)
-                .Select(u => u.UserID).FirstOrDefault();
 
-            if (userId != 0)
+            Users user = SOFEntity.getDb().Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
+
+            if (user != null)
             {
-                var identity = new ClaimsIdentity(new[]
+                var decryptedPassword = CustomDecrypt.Decrypt(user.Password);
+
+                if (model.Password == decryptedPassword)
                 {
-                    new Claim(ClaimTypes.Sid, userId.ToString()), //user id cookie
-                    new Claim(ClaimTypes.Role, new SofModel().Users.Where(u=>u.UserID == userId).Select(u=>u.RoleID).FirstOrDefault().ToString()) //role id cookie
-                }, "ApplicationCookie");
 
-                var ctx = Request.GetOwinContext();
-                var authManager = ctx.Authentication;
-                authManager.SignIn(identity);
-                
-                
+                    var identity = new ClaimsIdentity(new[]
+                    {
+                    new Claim(ClaimTypes.Sid, user.UserID.ToString()), //user id cookie
+                    new Claim(ClaimTypes.Role, user.RoleID.ToString()) //role id cookie
+                    }, "ApplicationCookie");
 
-                return RedirectToAction("Index","Home");
+                    var temp = SOFEntity.getDb().Orders.Where(o => o.OrderStatus == null && o.UserID == user.UserID).ToList();
+                    if (temp.Any())
+                    {
+                        foreach (var item in temp)
+                        {
+                            SOFEntity.getDb().Orders.Remove(item);
+                        }
+
+                    }
+                    else
+                    {
+                        var order = new SOF301.Models.Orders();
+
+                        order.UserID = user.UserID;
+                        try
+                        {
+                            SOFEntity.getDb().Orders.Add(order);
+
+                            SOFEntity.getDb().SaveChanges();
+
+
+                        }
+                        catch (Exception e)
+                        {
+                            ViewData["EditError"] = e.Message;
+                        }
+                    }
+
+                    var ctx = Request.GetOwinContext();
+                    var authManager = ctx.Authentication;
+                    authManager.SignIn(identity);
+
+                    return RedirectToAction("Index", "Home");
+
+
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid Password!");
+                    return View(model);
+                }
             }
             else
             {
-                ModelState.AddModelError("", "Invalid username or password!");
+                ModelState.AddModelError("", "Invalid user name!");
                 return View(model);
             }
         }
@@ -61,6 +100,30 @@ namespace SOF301.Controllers
         {
             var ctx = Request.GetOwinContext();
             var authManager = ctx.Authentication;
+            int userId = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
+            var order = SOFEntity.getDb().Orders.Where(o => o.UserID == userId && o.OrderStatus == null).FirstOrDefault();
+
+            var id = 1;
+            
+            var orderItems = SOFEntity.getDb().OrderItems.Where(o => o.Orders.OrderStatus == null && o.Orders.UserID == userId).ToList();
+
+            try
+            {
+                foreach (var item in orderItems)
+                {
+                    SOFEntity.getDb().OrderItems.Remove(item);
+
+
+                }
+                SOFEntity.getDb().Orders.Remove(order);
+                SOFEntity.getDb().SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+
+                ViewData["EditError"] = e.Message;
+            }
 
             authManager.SignOut("ApplicationCookie");
             return RedirectToAction("Login", "Auth");
@@ -68,29 +131,88 @@ namespace SOF301.Controllers
 
         public ActionResult Register()
         {
-            ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
+            ViewBag.UserCityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
+            ViewBag.RestaurantCityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
+            ViewBag.UserDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
+            ViewBag.RestaurantDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
+            //try to use js callback to show City's Districts
             return View();
         }
 
         [HttpPost]
-        public ActionResult Register(Users model)
+        public ActionResult Register(RegisterViewModel model, bool isRestaurantOwner = false)
         {
 
-            ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
+            ViewBag.UserCityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
+            ViewBag.RestaurantCityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
+            ViewBag.UserDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
+            ViewBag.RestaurantDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
 
             var user = SOFEntity.getDb().Users
-                .Where(u => u.UserName == model.UserName)
+                .Where(u => u.UserName == model.Users.UserName)
                 .Select(u => u).FirstOrDefault();  // if there is no user with given user name
 
             if (ModelState.IsValid && user == null) //Checks if input fields have the correct format
             {
-                
-                user = model;
-                user.RoleID = 3;
-                SOFEntity.getDb().Users.Add(user);
-                SOFEntity.getDb().SaveChanges();
+                if (string.IsNullOrWhiteSpace(model.Users.Email))
+                {
+                    ModelState.AddModelError("", "Email can not be blank!");
+                    return View(model);
+                }
+                if (!isRestaurantOwner)
+                {
+                    user = model.Users;
+                    var encryptedPassword = CustomEnrypt.Encrypt(user.Password);
+                    user.Password = encryptedPassword;
+                    user.RoleID = 3;                    //makes it customer
+                    SOFEntity.getDb().Users.Add(user);
+                    SOFEntity.getDb().SaveChanges();
 
-                return RedirectToAction("Login", "Auth");
+                    return RedirectToAction("Login", "Auth");
+
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(model.Restaurants.Name))
+                    {
+                        user = model.Users;
+                        user.RoleID = 2;                    //makes it owner
+
+                        SOFEntity.getDb().Users.Add(user);
+                        SOFEntity.getDb().SaveChanges();
+
+                        var rest = SOFEntity.getDb().Restaurants
+                            .Where(r => r.Name == model.Restaurants.Name)
+                            .Select(r => r).FirstOrDefault();
+
+                        if (rest == null)
+
+                        {
+                            rest = model.Restaurants;
+                            rest.UserID = user.UserID;
+                            rest.RestaurantStatu = false;
+
+                            SOFEntity.getDb().Restaurants.Add(rest);
+                            SOFEntity.getDb().SaveChanges();
+
+                            Requests r = new Requests();
+                            r.UserID = user.UserID;
+                            r.RestaurantID = rest.RestaurantID;
+                            SOFEntity.getDb().Requests.Add(r);
+                            SOFEntity.getDb().SaveChanges();
+
+                            return RedirectToAction("Login", "Auth");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Restaurant name already exist.");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Restaurant name can't be blank.");
+                    }
+                }
             }
             else
             {

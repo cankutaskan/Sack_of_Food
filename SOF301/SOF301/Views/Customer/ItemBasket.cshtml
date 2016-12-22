@@ -1,0 +1,51 @@
+﻿@model IEnumerable<SOF301.Models.OrderItems>
+@Styles.Render("/Content/css")
+
+<div class="panel panel-info">
+    <div class="panel-heading">Food Sack</div>
+    <div class="panel-body">
+
+        @{
+            if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+
+
+                    <ul class="list-group">
+
+                        <li>@Html.DisplayFor(modelItem => item.Foods.Name)</li>
+
+
+                    </ul>
+
+
+                }
+                @Html.ActionLink("Continue to Payment", "Payment")
+            }
+            else
+            {
+                <p> No item on your basket</p>
+
+            }
+        }
+
+
+
+    </div>
+</div>
+
+    <div class="basket">
+
+   
+</div> 
+<style>
+    ul{
+        list-style-type:none;
+
+    }
+
+
+
+
+</style>
