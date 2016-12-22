@@ -17,6 +17,7 @@
     <input type="password" name="Password" placeholder="password" class="pass">
 
     <button type="submit">Login</button>
+    <a href="@Url.Action("Register", "Auth")" class="reg">Don't have a account </a>
 }
 
 
@@ -35,7 +36,7 @@
         width: 250px;
         margin: 200px auto;
         background: rgba(130,130,130,.3);
-        padding: 20px 22px;
+        padding: 32px 22px;
         border: 1px solid;
         border-top-color: rgba(255,255,255,.4);
         border-left-color: rgba(255,255,255,.4);
@@ -58,6 +59,7 @@
             color: #fff;
             text-shadow: 0 1px 0 rgba(0,0,0,.1);
             margin-bottom: 19px;
+                border-radius: 10px;
         }
 
             form input:focus {
@@ -100,5 +102,12 @@
         border-bottom-color: #1b4849;
         border-right-color: #1e4d4e;
         cursor: pointer;
+    }
+
+    .reg {
+        position: absolute;
+        margin-top: 10px;
+        right: 2px;
+        color: white;
     }
 </style>

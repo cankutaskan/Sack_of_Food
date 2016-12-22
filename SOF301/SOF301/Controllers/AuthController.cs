@@ -30,7 +30,7 @@ namespace SOF301.Controllers
                 Response.Write("model not valid");
                 return View(model); //Returns the view with the input values so that the user doesn't have to retype again
             }
-            
+
 
             Users user = SOFEntity.getDb().Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
 
@@ -47,14 +47,41 @@ namespace SOF301.Controllers
                     new Claim(ClaimTypes.Role, user.RoleID.ToString()) //role id cookie
                     }, "ApplicationCookie");
 
+                    var temp = SOFEntity.getDb().Orders.Where(o => o.OrderStatus == null && o.UserID == user.UserID).ToList();
+                    if (temp.Any())
+                    {
+                        foreach (var item in temp)
+                        {
+                            SOFEntity.getDb().Orders.Remove(item);
+                        }
+
+                    }
+                    else
+                    {
+                        var order = new SOF301.Models.Orders();
+
+                        order.UserID = user.UserID;
+                        try
+                        {
+                            SOFEntity.getDb().Orders.Add(order);
+
+                            SOFEntity.getDb().SaveChanges();
+
+
+                        }
+                        catch (Exception e)
+                        {
+                            ViewData["EditError"] = e.Message;
+                        }
+                    }
 
                     var ctx = Request.GetOwinContext();
                     var authManager = ctx.Authentication;
                     authManager.SignIn(identity);
 
                     return RedirectToAction("Index", "Home");
-                
-                    
+
+
                 }
                 else
                 {
@@ -73,6 +100,30 @@ namespace SOF301.Controllers
         {
             var ctx = Request.GetOwinContext();
             var authManager = ctx.Authentication;
+            int userId = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
+            var order = SOFEntity.getDb().Orders.Where(o => o.UserID == userId && o.OrderStatus == null).FirstOrDefault();
+
+            var id = 1;
+            
+            var orderItems = SOFEntity.getDb().OrderItems.Where(o => o.Orders.OrderStatus == null && o.Orders.UserID == userId).ToList();
+
+            try
+            {
+                foreach (var item in orderItems)
+                {
+                    SOFEntity.getDb().OrderItems.Remove(item);
+
+
+                }
+                SOFEntity.getDb().Orders.Remove(order);
+                SOFEntity.getDb().SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+
+                ViewData["EditError"] = e.Message;
+            }
 
             authManager.SignOut("ApplicationCookie");
             return RedirectToAction("Login", "Auth");

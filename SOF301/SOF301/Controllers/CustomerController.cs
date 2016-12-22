@@ -4,23 +4,24 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
-
+using SOF301.Models;
 using System.Security.Claims;
+using System.Data.Entity;
 
 namespace SOF301.Controllers
 {
     public class CustomerController : Controller
     {
         // GET: Customer
-        SOF301.Models.SofModel db = new Models.SofModel();
-        
+
+
 
         public ActionResult Index(String sortOrder, string currentFilter, string searchString, int? page)
         {
-          
-            int x = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
-            var districtID = db.Users.Where(u => u.UserID == x).Select(r=>r.DistrictID).FirstOrDefault();
-        
+            int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
+
+            var districtID = SOFEntity.getDb().Users.Where(u => u.UserID == user).Select(r => r.DistrictID).FirstOrDefault();
+
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
             ViewBag.CurrentSort = sortOrder;
             if (searchString != null)
@@ -35,10 +36,18 @@ namespace SOF301.Controllers
             ViewBag.CurrentFilter = searchString;
 
 
-            var restaurant = db.Restaurants.Where(r=> r.DistrictID== districtID);
+            var restaurant = SOFEntity.getDb().Restaurants.Where(r => r.DistrictID == districtID);
+
             if (!String.IsNullOrEmpty(searchString))
             {
-          
+
+
+                restaurant = restaurant.Where(r => r.Name.Contains(searchString));
+
+
+                
+
+
             }
 
             switch (sortOrder)
@@ -55,48 +64,65 @@ namespace SOF301.Controllers
             int pageNumber = (page ?? 1);
             return View(restaurant.ToPagedList(pageNumber, pageSize));
         }
-        [HttpPost]
+        [HttpGet]
         public ActionResult RestaurantPage(int? RestaurantID)
         {
-            var foods = db.Foods.Where(r => r.RestaurantID == RestaurantID);
-            ViewBag.Restaurant = RestaurantID;
+            ViewBag.Title = SOFEntity.getDb().Restaurants.Where(r => r.RestaurantID == RestaurantID).Select(r => r.Name).FirstOrDefault();
+
+            var foods = SOFEntity.getDb().Foods.Where(r => r.RestaurantID == RestaurantID);
             return View(foods.ToList());
 
         }
-        [HttpGet]
-        public ActionResult RestaurantPage()
+        public ActionResult getBasket()
         {
+            int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
+            var basket = SOFEntity.getDb().OrderItems.Where(o => o.Orders.UserID == user && o.Orders.OrderStatus == null).ToList();
 
-            int RestaurantID = ViewBag.Restaurant;
-
-
-
-            var foods = db.Foods.Where(r => r.RestaurantID == RestaurantID);
-           
-            return View(foods.ToList());
-
+            return PartialView("ItemBasket", basket);
         }
-
-
 
         public ActionResult ItemBasket(int? FoodID)
         {
-
-            var order = new SOF301.Models.OrderItems();
-            
-            var RestaurantID = ViewBag.Restaurant;
-            order.FoodID = FoodID;
+            int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
+            var order = SOFEntity.getDb().Orders.Where(o => o.UserID == user && o.OrderStatus == null).FirstOrDefault();
+            var orderItem = new SOF301.Models.OrderItems();
+            orderItem.FoodID = FoodID;
+            orderItem.OrderID = order.OrderID;
             try
             {
 
 
-                db.OrderItems.Add(order);
-                db.SaveChanges();
+                SOFEntity.getDb().OrderItems.Add(orderItem);
+                SOFEntity.getDb().SaveChanges();
             }
-            catch
+            catch (Exception e)
             {
-                                
+                ViewData["EditError"] = e.Message;
             }
-            return RedirectToAction("RestaurantPage");
+            var basket = SOFEntity.getDb().OrderItems.Where(o => o.Orders.UserID == user && o.Orders.OrderStatus == null).ToList();
+            return PartialView(basket);
         }
-    } }
+
+        public ActionResult Payment()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Payment([Bind(Include = "OrderID,UserID,Date,TotalPrice,Telephone,Address,PaymentType,Description,OrderStatus")] Orders orders)
+        {
+
+            if (ModelState.IsValid)
+            {
+                SOFEntity.getDb().Entry(orders).State = EntityState.Modified;
+                SOFEntity.getDb().SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.UserID = new SelectList(SOFEntity.getDb().Users, "UserID", "UserName", orders.UserID);
+            return View(orders);
+        }
+
+
+    }
+}
