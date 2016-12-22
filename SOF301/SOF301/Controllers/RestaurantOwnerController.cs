@@ -11,11 +11,13 @@ using System.Security.Claims;
 
 namespace SOF301.Controllers
 {
-    public class RestaurantsController : Controller
+    public class RestaurantOwnerController : Controller
     {
-        private SofModel db = new SofModel();
 
-
+        public ActionResult Index()
+        {
+            return View();
+        }
 
         // GET: Restaurants/Details/5
         public ActionResult Details(int? id)
@@ -29,15 +31,11 @@ namespace SOF301.Controllers
 
          
 
-          Restaurants res = db.Restaurants.Find(id);
+          Restaurants res = SOFEntity.getDb().Restaurants.Find(id);
 
             return View(res);
         }
-
-  
-
-
-
+        
         // GET: Restaurants/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -45,45 +43,33 @@ namespace SOF301.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Restaurants restaurants = db.Restaurants.Find(id);
+            Restaurants restaurants = SOFEntity.getDb().Restaurants.Find(id);
             if (restaurants == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CityID = new SelectList(db.Cities, "CityID", "Name", restaurants.CityID);
-            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "Name", restaurants.DistrictID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "UserName", restaurants.UserID);
+            ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name", restaurants.CityID);
+            ViewBag.DistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name", restaurants.DistrictID);
+            ViewBag.UserID = new SelectList(SOFEntity.getDb().Users, "UserID", "UserName", restaurants.UserID);
             return View(restaurants);
         }
-
-        // POST: Restaurants/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
-      
         public ActionResult Edit([Bind(Include = "RestaurantID,Name,CityID,DistrictID,Address,UserID,StartingHour,FinishingHour,RestaurantStatu")] Restaurants restaurants)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(restaurants).State = EntityState.Modified;
-                db.SaveChanges();
+                SOFEntity.getDb().Entry(restaurants).State = EntityState.Modified;
+                SOFEntity.getDb().SaveChanges();
                 return RedirectToAction("Details");
             }
-            ViewBag.CityID = new SelectList(db.Cities, "CityID", "Name", restaurants.CityID);
-            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "Name", restaurants.DistrictID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "UserName", restaurants.UserID);
+            ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name", restaurants.CityID);
+            ViewBag.DistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name", restaurants.DistrictID);
+            ViewBag.UserID = new SelectList(SOFEntity.getDb().Users, "UserID", "UserName", restaurants.UserID);
             return View(restaurants);
         }
 
    
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        
     }
 }

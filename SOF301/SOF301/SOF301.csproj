@@ -187,13 +187,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\OrdersController.cs" />
-    <Compile Include="Controllers\RestaurantsController.cs" />
+    <Compile Include="Controllers\RestaurantOwnerController.cs" />
     <Compile Include="Controllers\TempOrdersController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -273,12 +272,12 @@
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\RestaurantPage.cshtml" />
     <Content Include="Views\Customer\ItemBasket.cshtml" />
-    <Content Include="Views\Orders\Index.cshtml" />
-    <Content Include="Views\Orders\Details.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Restaurants\Details.cshtml" />
-    <Content Include="Views\Restaurants\Edit.cshtml" />
+    <Content Include="Views\Customer\ListOrders.cshtml" />
+    <Content Include="Views\Customer\Details.cshtml" />
+    <Content Include="Views\Auth\Details.cshtml" />
+    <Content Include="Views\Auth\Edit.cshtml" />
+    <Content Include="Views\RestaurantOwnerController\Details.cshtml" />
+    <Content Include="Views\RestaurantOwnerController\Edit.cshtml" />
     <Content Include="Views\Customer\Payment.cshtml" />
     <Content Include="Views\TempOrders\Create.cshtml" />
     <Content Include="Views\TempOrders\Delete.cshtml" />
@@ -286,7 +285,9 @@
     <Content Include="Views\TempOrders\Edit.cshtml" />
     <Content Include="Views\TempOrders\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Admin\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
