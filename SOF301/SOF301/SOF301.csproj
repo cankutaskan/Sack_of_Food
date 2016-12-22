@@ -190,10 +190,9 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\TempOrdersController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -271,15 +270,18 @@
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
-
     <Content Include="Views\Customer\RestaurantPage.cshtml" />
     <Content Include="Views\Customer\ItemBasket.cshtml" />
-
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
-
+    <Content Include="Views\Customer\Payment.cshtml" />
+    <Content Include="Views\TempOrders\Create.cshtml" />
+    <Content Include="Views\TempOrders\Delete.cshtml" />
+    <Content Include="Views\TempOrders\Details.cshtml" />
+    <Content Include="Views\TempOrders\Edit.cshtml" />
+    <Content Include="Views\TempOrders\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

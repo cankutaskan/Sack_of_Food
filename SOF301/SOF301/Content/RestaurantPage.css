@@ -1,29 +1,13 @@
-﻿.basket{
-    position:fixed;
-    right:0;
-   
-   
-   background-color:blue;
-
+﻿.col-md-2{
+    right: 0;
+    position: absolute !important;
 }
-ul{
-    list-style:none;
-
+.table {
+    border-bottom:0px !important;
 }
-a.addButton{
-
-    
-    background: url(../Images/plus.png) no-repeat top left;
-    display: block;
-    text-indent: -9990px; 
-    height:20px;
-    width:20px;
-   
-
-
+.table th, .table td {
+    border: 1px !important;
 }
-td a {
-   float:left;
-
+.fixed-table-container {
+    border:0px !important;
 }
-

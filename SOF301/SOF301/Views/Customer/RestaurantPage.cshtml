@@ -1,17 +1,15 @@
 ﻿@model IEnumerable<SOF301.Models.Foods>
-   @Styles.Render("/Content/RestaurantPage.css")
+  @Styles.Render("/Content/RestaurantPage.css")
 
-@{
-    ViewBag.Title = "RestaurantPage";
-}
+ 
 
-<h2>RestaurantPage</h2>
+<h2>@ViewBag.Title</h2>
 <div class="container">
 
     <div class="row">
 
-        <div class="col-md-6">
-            <table class="table">
+        <div class="col-md-8">
+            <table class="table" data-striped="true">
                 <tr>
 
                     <th>
@@ -23,9 +21,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Description)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FoodStatu)
-                    </th>
+                    
 
                 </tr>
 
@@ -36,12 +32,22 @@
                         <tr>
 
                             <td>
-                           @ViewBag.Restaurant
+                          
 
-                                    @Html.ActionLink("add", "ItemBasket", null, new { @class = "addButton" })
+                                
+                                <div class="name">
+                                    <div class="add" style="float:left;">
+                                        <span class="glyphicon glyphicon-plus" style="margin-left:-30px;"></span>
+
+                                        <span class="hidenID">@item.FoodID</span>
+
+                                    </div>
                                     @Html.DisplayFor(modelItem => item.Name)
-
-                              
+                                   
+                                </div>
+                                
+                               
+                                
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Price)
@@ -49,7 +55,7 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Description)
                             </td>
-                            <td> haslkdjaskldjdkjasldjsldjlasdsldlaskdjlasdjlasdjljdasl </td>
+                            
 
                         </tr>
 
@@ -63,12 +69,10 @@
             </table>
 
         </div>
-        <div class="col-md-6">
-            @{
-                var order = new SOF301.Models.SofModel().OrderItems;
-            }
+        <div class="col-md-2">
+           
             <div id="partial">
-                @Html.Partial("ItemBasket", order)
+              
             </div>
         
 
@@ -76,4 +80,41 @@
     </div>
 
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('.hidenID').hide() //**hide your span
+        $.ajax({
+            url: "/Customer/getBasket",
+            datatype: "text",
+            type: "GET",
+            success: function (data) {
+                $('#partial').html(data);
+            },
+            error: function () {
+                $("#partial").html("ERROR");
+            }
+    });
+    $(".add").click(function () {
+        var id = $(this).closest('div').find('.hidenID').text();
+        $('.hidenID').hide() //**hide your span
+        $.ajax({
+            url: "/Customer/ItemBasket/?FoodID=" + id,
+            datatype: "text",
+            type: "GET",
+            success: function (data) {
+                $('#partial').html(data);
+            },
+            error: function () {
+                $("#partial").html("ERROR");
+            }
+      
+            });
+        });
+
+    });
+
+
+
+</script>
 
