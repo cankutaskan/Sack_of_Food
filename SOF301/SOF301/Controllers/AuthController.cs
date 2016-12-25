@@ -21,6 +21,7 @@ namespace SOF301.Controllers
 
             return View();
         }
+ 
 
         [HttpPost]
         public ActionResult Login(Users model)
@@ -49,16 +50,26 @@ namespace SOF301.Controllers
                     }, "ApplicationCookie");
 
                     var temp = SOFEntity.getDb().Orders.Where(o => o.OrderStatus == null && o.UserID == user.UserID).ToList();
+                     
                     if (temp.Any())
                     {
                         foreach (var item in temp)
                         {
+                            var basket = SOFEntity.getDb().OrderItems.Where(o => o.OrderID == item.OrderID).ToList();
+                            foreach(var oitem in basket)
+                            {
+                                SOFEntity.getDb().OrderItems.Remove(oitem);
+
+
+                            }
+                         
                             SOFEntity.getDb().Orders.Remove(item);
+                            SOFEntity.getDb().SaveChanges();
                         }
 
                     }
-                    else
-                    {
+                   
+                    
                         var order = new SOF301.Models.Orders();
 
                         order.UserID = user.UserID;
@@ -74,7 +85,7 @@ namespace SOF301.Controllers
                         {
                             ViewData["EditError"] = e.Message;
                         }
-                    }
+                    
 
                     var ctx = Request.GetOwinContext();
                     var authManager = ctx.Authentication;

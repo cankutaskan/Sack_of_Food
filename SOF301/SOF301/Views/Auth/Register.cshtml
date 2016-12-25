@@ -65,7 +65,8 @@
 
     <script>
         $(document).ready(function () {
-            $("#isRestaurantOwner").change(function (event) {
+            $("#isRestaurantOwner").change(function () {
+               
                 if (this.checked) {
                     $("#rownerRegister").show();
                     $("#customerRegister").hide();
