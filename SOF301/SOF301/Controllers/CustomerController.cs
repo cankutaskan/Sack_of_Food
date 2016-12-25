@@ -214,14 +214,7 @@ namespace SOF301.Controllers
             return View(list);
         }
         
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                SOFEntity.getDb().Dispose();
-            }
-            base.Dispose(disposing);
-        }
+ 
 
     }
 }
