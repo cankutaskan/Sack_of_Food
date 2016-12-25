@@ -7,6 +7,7 @@ using SOF301.Models;
 using System.Security.Claims;
 using System.Data.Entity;
 using SOF301.Tools;
+using System.Net;
 
 namespace SOF301.Controllers
 {
@@ -90,7 +91,18 @@ namespace SOF301.Controllers
                     var authManager = ctx.Authentication;
                     authManager.SignIn(identity);
 
-                    return RedirectToAction("Index", "Home");
+                    switch (user.RoleID)
+                    {
+                        case 1:
+                            return RedirectToAction("Index", "Admin");
+                        case 2:
+                            return RedirectToAction("Index", "RestaurantOwner");
+                        case 3:
+                            return RedirectToAction("Index", "Customer");
+                        default:
+                            return RedirectToAction("Index", "Home");
+                    }
+
 
 
                 }
@@ -112,9 +124,8 @@ namespace SOF301.Controllers
             var ctx = Request.GetOwinContext();
             var authManager = ctx.Authentication;
             int userId = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
-            var order = SOFEntity.getDb().Orders.Where(o => o.UserID == userId && o.OrderStatus == null).FirstOrDefault();
-
-            var id = 1;
+            var order = SOFEntity.getDb().Orders.Where(o => o.UserID == userId);
+            var temp = order.Where(o => o.OrderStatus == null).FirstOrDefault();
             
             var orderItems = SOFEntity.getDb().OrderItems.Where(o => o.Orders.OrderStatus == null && o.Orders.UserID == userId).ToList();
 
@@ -126,7 +137,7 @@ namespace SOF301.Controllers
 
 
                 }
-                SOFEntity.getDb().Orders.Remove(order);
+                SOFEntity.getDb().Orders.Remove(temp);
                 SOFEntity.getDb().SaveChanges();
 
             }
@@ -184,7 +195,7 @@ namespace SOF301.Controllers
                 }
                 else
                 {
-                    if (string.IsNullOrWhiteSpace(model.Restaurants.Name))
+                    if (!string.IsNullOrWhiteSpace(model.Restaurants.Name))
                     {
                         user = model.Users;
                         user.RoleID = 2;                    //makes it owner
@@ -231,6 +242,69 @@ namespace SOF301.Controllers
             }
             return View(model);
         }
+
+        // GET: Users/Details/5
+        public ActionResult Details(int? id)
+
+        {
+            var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
+
+            Users users = SOFEntity.getDb().Users.Find(userID);
+
+            return View(users);
+        }
+
+        // GET: Users1/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Users users = SOFEntity.getDb().Users.Find(id);
+            if (users == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name", users.CityID);
+            ViewBag.RoleID = new SelectList(SOFEntity.getDb().Roles, "RoleID", "Name", users.RoleID);
+            return View(users);
+        }
+        
+        [HttpPost]
+        public ActionResult Edit([Bind(Include = "UserID,RoleID,UserName,Password,Name,Surname,Telephone,Address,CityID,DistrictID,Email")] Users users)
+        {
+            if (ModelState.IsValid)
+            {
+                SOFEntity.getDb().Entry(users).State = EntityState.Modified;
+                SOFEntity.getDb().SaveChanges();
+                return RedirectToAction("Details");
+            }
+            ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name", users.CityID);
+            ViewBag.RoleID = new SelectList(SOFEntity.getDb().Roles, "RoleID", "Name", users.RoleID);
+            return View(users);
+        }
+
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPassword([Bind(Include = "UserID,UserName,Email")] Users u)
+        {
+            Users user = SOFEntity.getDb().Users.Where(t => t.UserName == u.UserName).First();
+            if (user != null)
+            {
+                MailHandler.SendForgottenPassword(user);
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid username!");
+            }
+            return View(u);
+        }
+        
 
     }
 }

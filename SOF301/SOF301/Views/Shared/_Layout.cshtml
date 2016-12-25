@@ -42,22 +42,22 @@
                           
                         
                     <li>@Html.ActionLink("Home", "", "")</li>
-                    <li>@Html.ActionLink("My Orders", "Index", "Orders")</li>
-                    <li>@Html.ActionLink("Profile", "Details", "Users")</li>
+                    <li>@Html.ActionLink("My Orders", "ListOrders", "Customer")</li>
+                    <li>@Html.ActionLink("Profile", "Details", "Auth")</li>
                     }
 
                             if (c.Value.Equals("2")) { 
                     
                     <li>@Html.ActionLink("Orders", "", "")</li>
-                    <li>@Html.ActionLink("My Restaurant", "", "")</li>
+                    <li>@Html.ActionLink("My Restaurant", "Details", "Restaurants")</li>
                     <li>@Html.ActionLink("Foods", "", "")</li>
-                    <li>@Html.ActionLink("Profile", "Details", "Users")</li>
+                    <li>@Html.ActionLink("Profile", "Details", "Auth")</li>
                     }
                             if (c.Value.Equals("1")) { 
 
                     <li>@Html.ActionLink("Requests", "", "")</li>
                     <li>@Html.ActionLink("Restaurants", "", "")</li>
-                    <li>@Html.ActionLink("Profile", "Details", "Users")</li>
+                    <li>@Html.ActionLink("Profile", "Details", "Auth")</li>
                     }
                     }
 

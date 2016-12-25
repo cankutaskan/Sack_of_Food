@@ -7,6 +7,7 @@ using PagedList;
 using SOF301.Models;
 using System.Security.Claims;
 using System.Data.Entity;
+using System.Net;
 
 namespace SOF301.Controllers
 {
@@ -64,6 +65,7 @@ namespace SOF301.Controllers
             int pageNumber = (page ?? 1);
             return View(restaurant.ToPagedList(pageNumber, pageSize));
         }
+
         [HttpGet]
         public ActionResult RestaurantPage(int? RestaurantID)
         {
@@ -73,6 +75,7 @@ namespace SOF301.Controllers
             return View(foods.ToList());
 
         }
+
         public ActionResult getBasket()
         {
             int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
@@ -189,7 +192,36 @@ namespace SOF301.Controllers
             ViewBag.UserID = new SelectList(SOFEntity.getDb().Users, "UserID", "UserName", orders.UserID);
             return View();
         }
+        
+        public ActionResult ListOrders()
+        {
+            var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
 
+
+            var orders = SOFEntity.getDb().Orders.Where(o => o.UserID == userID);
+            return View(orders.ToList());
+        }
+        
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var OrderID = SOFEntity.getDb().OrderItems.Find(id).OrderID;
+            var list = SOFEntity.getDb().OrderItems.Where(o => o.OrderID == OrderID).ToList();
+
+            return View(list);
+        }
+        
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                SOFEntity.getDb().Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
     }
 }
