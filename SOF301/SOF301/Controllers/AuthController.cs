@@ -157,9 +157,31 @@ namespace SOF301.Controllers
             ViewBag.RestaurantCityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
             ViewBag.UserDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
             ViewBag.RestaurantDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
+            
             //try to use js callback to show City's Districts
             return View();
         }
+        [HttpPost]
+        public JsonResult GetDistrict(string id)
+        {
+            //   List<SelectListItem> districts = new List<SelectListItem>();
+
+          int ID = int.Parse(id);
+            var districts = SOFEntity.getDb().Districts.Where(d => d.CityID == ID);
+          //  List<SelectList> district = new List(districts, "DistrictID", "Name");
+            List<SelectListItem> ls = new List<SelectListItem>();
+      
+            foreach (var temp in districts)
+            {
+              
+                ls.Add(new SelectListItem() { Text = temp.Name, Value = temp.DistrictID.ToString() });
+            }
+
+
+
+
+            return Json(new SelectList(ls, "Value", "Text"));
+        } 
 
         [HttpPost]
         public ActionResult Register(RegisterViewModel model, bool isRestaurantOwner = false)
