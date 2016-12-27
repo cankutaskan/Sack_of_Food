@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SOF301.Models.Requests>
+
+@{
+    ViewBag.Title = "ListRequests";
+}
+
+<h2>Restaurant Requests</h2>
+<div class="row">
+        <table class="table">
+            <tr>
+                <th>
+                    Restaurant Name
+                </th>
+                <th>
+                    Restaurant Owner's User Name
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Restaurants.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Users.UserName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Accept", "AcceptRequest", "Admin", new { id = item.RequestID }, null) |
+                        @Html.ActionLink("Reject", "RejectRequest", "Admin", new { id = item.RequestID }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+
