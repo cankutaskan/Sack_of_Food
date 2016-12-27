@@ -170,7 +170,7 @@ namespace SOF301.Controllers
 
 
         
-                order.OrderStatus = 1;
+                order.OrderStatus = 0;
                 var newOrder = new SOF301.Models.Orders();
                 newOrder.UserID = userID;
 

@@ -1,81 +1,312 @@
-
 ﻿@model SOF301.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
 }
+@Scripts.Render("~/Content/jquery.backstretch.min.js")
 
-<h1>Register</h1>
+
 
 
 @Html.ValidationSummary(true)
-@using (Html.BeginForm())
-{
-    
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>User Details</h2> <br />
-                @Html.LabelFor(u => u.Users.UserName) <br />
-                @Html.TextBoxFor(u => u.Users.UserName)    <br />
-                @Html.LabelFor(u => u.Users.Password)    <br />
-                @Html.PasswordFor(u => u.Users.Password)    <br />
-                @Html.LabelFor(u => u.Users.Email)    <br />
-                @Html.TextBoxFor(u => u.Users.Email)    <br />
-                @Html.LabelFor(u => u.Users.Name) <br />
-                @Html.TextBoxFor(u => u.Users.Name)    <br />
-                @Html.LabelFor(u => u.Users.Surname) <br />
-                @Html.TextBoxFor(u => u.Users.Surname)    <br />
-                @Html.LabelFor(u => u.Users.Telephone) <br />
-                @Html.TextBoxFor(u => u.Users.Telephone)    <br />
-                @Html.LabelFor(u => u.Users.Address) <br />
-                @Html.TextBoxFor(u => u.Users.Address)    <br />
-                @Html.LabelFor(u => u.Users.CityID)    <br />
-                @Html.DropDownListFor(u => u.Users.CityID, ViewBag.UserCityID as IEnumerable<SelectListItem>) <br />
-                @Html.LabelFor(u => u.Users.DistrictID)    <br />
-                @Html.DropDownListFor(u => u.Users.DistrictID, ViewBag.UserDistrictID as IEnumerable<SelectListItem>) <br />
+
+<div class="loginForm container">
+    <div class="col-md-8 col-md-offset-2">
+        @using (Html.BeginForm())
+        {
+
+            <div class="col-md-4">
+
+               <div class="form-box">
+                   
+                    <div class="form-bottom">
+
+                        <div class="form-group">
+
+                            @Html.LabelFor(u => u.Users.UserName)
+                            @Html.TextBoxFor(u => u.Users.UserName, new { @placeholder = "UserName", @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(u => u.Users.Password)
+                            @Html.PasswordFor(u => u.Users.Password, new { @placeholder = "Password", @class = "form-control" })
+
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(u => u.Users.Email)
+                            @Html.TextBoxFor(u => u.Users.Email, new { @placeholder = "Email", @class = "form-control" })
+
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(u => u.Users.Name)
+                            @Html.TextBoxFor(u => u.Users.Name, new { @placeholder = "Name", @class = "form-control" })
+
+                        </div>
+                        <div class="form-group">
+
+                            @Html.LabelFor(u => u.Users.Surname)
+                            @Html.TextBoxFor(u => u.Users.Surname, new { @placeholder = "Last Name", @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+
+                            @Html.LabelFor(u => u.Users.Telephone)
+                            @Html.TextBoxFor(u => u.Users.Telephone, new { @placeholder = "Telephone", @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+
+                            @Html.LabelFor(u => u.Users.Address)
+                            @Html.TextBoxFor(u => u.Users.Address, new { @placeholder = "Address", @class = "form-control" })
+
+                        </div>
+                        <div class="form-group">
+
+                            @Html.LabelFor(u => u.Users.CityID)
+                            @Html.DropDownListFor(u => u.Users.CityID, ViewBag.UserCityID as IEnumerable<SelectListItem>, new { @placeholder = "City", @class = "form-control" })
+                        </div>
 
 
-                <p>
-                    <input type="checkbox" id="isRestaurantOwner" name="isRestaurantOwner" value="true" />
-                    I am a restaurant owner.
-                </p>
-                <div id="customerRegister">
-                    <button type="submit">Register</button>
+                        <div class="form-group">
+                            @Html.LabelFor(u => u.Users.DistrictID)
+                            @Html.DropDownListFor(u => u.Users.DistrictID, ViewBag.UserDistrictID as IEnumerable<SelectListItem>, new { @placeholder = "District", @class = "form-control" })
+                        </div>
+
+                        <p>
+                            <input type="checkbox" id="isRestaurantOwner" name="isRestaurantOwner" value="true" />
+                            I am a restaurant owner.
+                        </p>
+                        <div id="customerRegister">
+                            <button class="form-control" type="submit">Register</button>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6" id="rownerRegister" hidden="hidden">
-                <h2>Restaurant Details</h2> <br />
-                @Html.LabelFor(r => r.Restaurants.Name)<br />
-                @Html.TextBoxFor(r => r.Restaurants.Name)<br />
-                @Html.LabelFor(r => r.Restaurants.CityID)<br />
-                @Html.DropDownListFor(r => r.Restaurants.CityID, ViewBag.RestaurantCityID as IEnumerable<SelectListItem>) <br />
-                @Html.LabelFor(r => r.Restaurants.DistrictID)<br />
-                @Html.DropDownListFor(r => r.Restaurants.DistrictID, ViewBag.RestaurantDistrictID as IEnumerable<SelectListItem>) <br />
-                @Html.LabelFor(r => r.Restaurants.Address)<br />
-                @Html.TextBoxFor(r => r.Restaurants.Address)<br />
-                @Html.LabelFor(r => r.Restaurants.StartingHour)<br />
-                @Html.EditorFor(r => r.Restaurants.StartingHour)<br />
-                @Html.LabelFor(r => r.Restaurants.FinishingHour)<br />
-                @Html.EditorFor(r => r.Restaurants.FinishingHour)<br />
-                <br />
-                <button type="submit">Send Request</button>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        $(document).ready(function () {
-            $("#isRestaurantOwner").change(function () {
-               
-                if (this.checked) {
-                    $("#rownerRegister").show();
-                    $("#customerRegister").hide();
-                } else {
-                    $("#rownerRegister").hide();
-                    $("#customerRegister").show();
+
+                </div>
+
+
+                
+
+            
+
+            <div class="col-md-4" id="rownerRegister">
+
+                <div class="form-box">
+                    <div class="form-bottom">
+
+                        <div class="form-group">
+
+                            @Html.LabelFor(r => r.Restaurants.Name)
+                            @Html.TextBoxFor(r => r.Restaurants.Name, new { @placeholder = "Restaurant Name", @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(r => r.Restaurants.CityID)<br />
+                            @Html.DropDownListFor(r => r.Restaurants.CityID, ViewBag.RestaurantCityID as IEnumerable<SelectListItem>, new { @placeholder = "City", @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(r => r.Restaurants.DistrictID)
+                            @Html.DropDownListFor(r => r.Restaurants.DistrictID, ViewBag.RestaurantDistrictID as IEnumerable<SelectListItem>, new { @placeholder = "District", @class = "form-control" })
+
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(r => r.Restaurants.Address)
+                            @Html.TextBoxFor(r => r.Restaurants.Address, new { @placeholder = "Address", @class = "form-control" })
+
+                        </div>
+                        <div class="form-group">
+
+                            @Html.LabelFor(r => r.Restaurants.StartingHour)
+                            @Html.EditorFor(r => r.Restaurants.StartingHour, new { @placeholder = "StartingHour", @class = "form-control" })
+
+                        </div>
+                        <div class="form-group">
+
+                            @Html.LabelFor(r => r.Restaurants.FinishingHour)
+                            @Html.EditorFor(r => r.Restaurants.FinishingHour, new { @placeholder = "FinishHour", @class = "form-control" })
+                        </div>
+
+
+
+
+                        <button type="submit" class="form-control">Send Request</button>
+
+                    </div>
+                </div>
+
+            </div>
+
+        }
+    </div>
+</div>
+<style>
+    img {
+        max-width: 100%;
+    }
+
+    ::-moz-selection {
+        background: #19b9e7;
+        color: #fff;
+        text-shadow: none;
+    }
+
+    ::selection {
+        background: #19b9e7;
+        color: #fff;
+        text-shadow: none;
+    }
+
+
+    .form-box {
+        margin-top: 70px;
+    }
+
+
+
+    .form-bottom {
+        padding: 25px 25px 30px 25px;
+        background: #444;
+        background: rgba(0, 0, 0, 0.3);
+        -moz-border-radius: 0 0 4px 4px;
+        -webkit-border-radius: 0 0 4px 4px;
+        border-radius: 0 0 4px 4px;
+        text-align: left;
+        border-radius:15px;
+
+    }
+
+        .form-bottom form textarea {
+            height: 100px;
+        }
+
+        .form-bottom form button.btn {
+            width: 100%;
+        }
+
+        .form-bottom form .input-error {
+            border-color: #19b9e7;
+        }
+
+    .social-login {
+        margin-top: 35px;
+    }
+
+        .social-login h3 {
+            color: #fff;
+        }
+
+    .social-login-buttons {
+        margin-top: 25px;
+    }
+
+    .middle-border {
+        min-height: 300px;
+        margin-top: 170px;
+        border-right: 1px solid #fff;
+        border-right: 1px solid rgba(255, 255, 255, 0.6);
+    }
+</style>
+
+
+
+<script>
+    $.backstretch("/Images/pot.jpg");
+
+
+
+    $(document).ready(function () {
+
+
+        $("#rownerRegister").hide();
+
+
+
+        $("#isRestaurantOwner").change(function () {
+
+            if (this.checked) {
+                $("#rownerRegister").show();
+                $("#customerRegister").hide();
+            } else {
+                $("#rownerRegister").hide();
+                $("#customerRegister").show();
+            }
+        });
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        $("#Users_CityID").change(function () {
+            $("#Users_DistrictID").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetDistrict")', // we are calling json method
+
+                dataType: 'json',
+
+                data: { id: $("#Users_CityID").val() },
+                // here we are get value of selected country and passing same value  as inputto json method GetStates.
+
+
+                success: function (districts) {
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+
+                    $.each(districts, function (i, district) {
+                        $("#Users_DistrictID").append('<option value="' + district.Value + '">' +
+                             district.Text + '</option>');
+                        // here we are adding option for States
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
                 }
             });
-        });
-    </script>
+            return false;
+        })
+    });
+</script>
 
-}
+<script>
+
+    $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        $("#Restaurants_CityID").change(function () {
+            $("#Restaurants_DistrictID").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetDistrict")', // we are calling json method
+
+                dataType: 'json',
+
+                data: { id: $("#Restaurants_CityID").val() },
+                // here we are get value of selected country and passing same value  as inputto json method GetStates.
+
+
+                success: function (districts) {
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+
+                    $.each(districts, function (i, district) {
+                        $("#Restaurants_DistrictID").append('<option value="' + district.Value + '">' +
+                             district.Text + '</option>');
+                        // here we are adding option for States
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+
+
+</script>
+
+
+
+
+
+
