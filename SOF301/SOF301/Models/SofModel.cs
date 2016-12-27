@@ -28,12 +28,14 @@ namespace SOF301.Models
             modelBuilder.Entity<Restaurants>()
                 .HasMany(e => e.Requests)
                 .WithRequired(e => e.Restaurants)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Users>()
                 .HasMany(e => e.Requests)
                 .WithRequired(e => e.Users)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
+
+            
         }
     }
 }

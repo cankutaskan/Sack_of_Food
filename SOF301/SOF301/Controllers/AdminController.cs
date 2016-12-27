@@ -1,6 +1,7 @@
 ﻿using SOF301.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,6 +19,12 @@ namespace SOF301.Controllers
         public ActionResult ListRequests()
         {
             var list = SOFEntity.getDb().Requests.Select(s => s).ToList();
+            return View(list);
+        }
+
+        public ActionResult ListUsers()
+        {
+            var list = SOFEntity.getDb().Users.Select(s => s).ToList();
             return View(list);
         }
         
@@ -61,6 +68,24 @@ namespace SOF301.Controllers
             }
 
             return RedirectToAction("ListRequests");
+        }
+
+        
+        public ActionResult DeleteUser(string id)
+        {
+
+            if (!string.IsNullOrEmpty(id))
+            {
+                int temp = int.Parse(id);
+                Users u = SOFEntity.getDb().Users.Find(temp);
+                if (u != null)
+                {
+                    SOFEntity.getDb().Users.Remove(u);
+                    SOFEntity.getDb().SaveChanges();
+                }
+            }
+
+            return RedirectToAction("ListUsers");
         }
 
     }

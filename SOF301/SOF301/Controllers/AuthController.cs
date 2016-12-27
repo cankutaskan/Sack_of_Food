@@ -198,6 +198,8 @@ namespace SOF301.Controllers
                     if (!string.IsNullOrWhiteSpace(model.Restaurants.Name))
                     {
                         user = model.Users;
+                        var encryptedPassword = CustomEnrypt.Encrypt(user.Password);
+                        user.Password = encryptedPassword;
                         user.RoleID = 2;                    //makes it owner
 
                         SOFEntity.getDb().Users.Add(user);
