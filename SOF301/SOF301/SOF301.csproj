@@ -279,8 +279,8 @@
     <Content Include="Views\Customer\Details.cshtml" />
     <Content Include="Views\Auth\Details.cshtml" />
     <Content Include="Views\Auth\Edit.cshtml" />
-    <Content Include="Views\RestaurantOwnerController\Details.cshtml" />
-    <Content Include="Views\RestaurantOwnerController\Edit.cshtml" />
+    <Content Include="Views\RestaurantOwner\Details.cshtml" />
+    <Content Include="Views\RestaurantOwner\Edit.cshtml" />
     <Content Include="Views\Customer\Payment.cshtml" />
     <Content Include="Views\TempOrders\Create.cshtml" />
     <Content Include="Views\TempOrders\Delete.cshtml" />
@@ -289,6 +289,8 @@
     <Content Include="Views\TempOrders\Index.cshtml" />
     <Content Include="Views\Auth\ForgotPassword.cshtml" />
     <Content Include="Views\Admin\ListRequests.cshtml" />
+    <Content Include="Views\Admin\ListUsers.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
