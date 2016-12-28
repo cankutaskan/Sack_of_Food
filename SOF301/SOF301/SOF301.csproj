@@ -291,6 +291,7 @@
     <Content Include="Views\Admin\ListRequests.cshtml" />
     <Content Include="Views\Admin\ListUsers.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\ListRestaurants.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
