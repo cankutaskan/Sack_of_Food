@@ -148,51 +148,53 @@ namespace SOF301.Controllers
         [HttpPost]
         public ActionResult Payment([Bind(Include = "TotalPrice,Address,PaymentType,Description")] Orders orders)
         {
-            
+
             int userID = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
-            var order = SOFEntity.getDb().Orders.Where(o => o.UserID == userID && o.OrderStatus == null).FirstOrDefault();
-            order.Description = orders.Description;
-            order.PaymentType = orders.PaymentType;
-            order.TotalPrice = orders.TotalPrice;
-           // order.TotalPrice=
-           
-            if (orders.Address == null)
-            {
-
-                order.Address = SOFEntity.getDb().Users.Find(userID).Address;
-
-            }
-            else
-            {
-                order.Address = orders.Address;
-
-            }
-
-
-        
-                order.OrderStatus = 0;
-                var newOrder = new SOF301.Models.Orders();
-                newOrder.UserID = userID;
-
-               
-                try
-                {
-                    SOFEntity.getDb().Orders.Add(newOrder);
-
-                    SOFEntity.getDb().SaveChanges();
-                }
-                catch(Exception e)
-                {
-
-
-
-                }
-                return RedirectToAction("Index");
             
+            
+            var user = SOFEntity.getDb().Users.Find(userID);
+           
+            DateTime current = new DateTime();
+           
+            var order = SOFEntity.getDb().Orders.Where(o => o.UserID == userID && o.OrderStatus == null).FirstOrDefault();
+            order.UserID = userID;
+            order.Telephone = user.Telephone;
+            order.Date = current;
+            order.TotalPrice = orders.TotalPrice;
+            order.Address = orders.Address;
+            order.PaymentType = orders.PaymentType;
+            order.Description = orders.Description;
+            order.OrderStatus = 0;
+            //SOFEntity.getDb().Orders.Attach(order);
+
+            //SOFEntity.getDb().Entry(orders).State = EntityState.Modified;
+            //SOFEntity.getDb().SaveChanges();
+
+
+
+
+            var newOrder = new SOF301.Models.Orders();
+            newOrder.UserID = userID;
+
+
+            try
+            {
+                SOFEntity.getDb().Orders.Add(newOrder);
+
+                SOFEntity.getDb().SaveChanges();
+            }
+            catch (Exception e)
+            {
+
+
+
+            }
+            return RedirectToAction("Index");
+
             ViewBag.UserID = new SelectList(SOFEntity.getDb().Users, "UserID", "UserName", orders.UserID);
             return View();
         }
-        
+
         public ActionResult ListOrders()
         {
             var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
@@ -201,7 +203,7 @@ namespace SOF301.Controllers
             var orders = SOFEntity.getDb().Orders.Where(o => o.UserID == userID);
             return View(orders.ToList());
         }
-        
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -213,6 +215,6 @@ namespace SOF301.Controllers
 
             return View(list);
         }
-        
+
     }
 }
