@@ -14,14 +14,12 @@ namespace SOF301.Controllers
     [AllowAnonymous]
     public class AuthController : Controller
     {
-        // GET: Auth
         [HttpGet]
         public ActionResult Login(string url)
         {
 
             return View();
         }
- 
 
         [HttpPost]
         public ActionResult Login(Users model)
@@ -161,6 +159,7 @@ namespace SOF301.Controllers
             //try to use js callback to show City's Districts
             return View();
         }
+
         [HttpPost]
         public JsonResult GetDistrict(string id)
         {
@@ -266,8 +265,7 @@ namespace SOF301.Controllers
             }
             return View(model);
         }
-
-        // GET: Users/Details/5
+        
         public ActionResult Details(int? id)
 
         {
@@ -277,8 +275,7 @@ namespace SOF301.Controllers
 
             return View(users);
         }
-
-        // GET: Users1/Edit/5
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)

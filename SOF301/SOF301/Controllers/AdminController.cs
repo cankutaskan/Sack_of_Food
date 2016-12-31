@@ -27,7 +27,13 @@ namespace SOF301.Controllers
             var list = SOFEntity.getDb().Users.Select(s => s).ToList();
             return View(list);
         }
-        
+
+        public ActionResult ListRestaurants()
+        {
+            var list = SOFEntity.getDb().Restaurants.Select(s => s).ToList();
+            return View(list);
+        }
+
         public ActionResult AcceptRequest(string id)
         {
             if (!string.IsNullOrEmpty(id))
@@ -69,7 +75,6 @@ namespace SOF301.Controllers
 
             return RedirectToAction("ListRequests");
         }
-
         
         public ActionResult DeleteUser(string id)
         {
@@ -87,6 +92,22 @@ namespace SOF301.Controllers
 
             return RedirectToAction("ListUsers");
         }
+
+        public ActionResult DeleteRestaurant(string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                int temp = int.Parse(id);
+                Restaurants u = SOFEntity.getDb().Restaurants.Find(temp);
+                if (u != null)
+                {
+                    SOFEntity.getDb().Restaurants.Remove(u);
+                    SOFEntity.getDb().SaveChanges();
+                }
+            }
+            return RedirectToAction("ListRestaurants");
+        }
+
 
     }
 }
