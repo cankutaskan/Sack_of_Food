@@ -34,7 +34,7 @@
                 <div class="col-md-10">
 
                     <p class="">
-                        <input type="text" value=@ViewBag.Address name="TotalPrice" readonly class="form-control" /> 
+                        <input type="text" id="def" value=@ViewBag.Address name="Address" readonly class="defaultAD form-control" />
 
                     </p>
 
@@ -49,14 +49,14 @@
         <div class="form-group">
 
             <<div class="col-sm-offset-2 col-sm-10">
-     
-        <label>
-             <input type="checkbox"  class="addressCheck">  Add New Address
 
-        </label>
-   
-    </div>
-           
+                <label>
+                    <input type="checkbox" class="addressCheck" id="check">  Add New Address
+
+                </label>
+
+            </div>
+
 
 
         </div>
@@ -65,8 +65,14 @@
 
         <div id="addAdress">
             <div class="form-group">
-                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+              
+                @*@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <label>
+                    <input type="text" id="al" class="alternateAD">  New Address
+
+                </label>
+               
+                @*@Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "alternateAD form-control" } })*@
                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
 
             </div>
@@ -74,14 +80,14 @@
 
         <div class="paymentType">
             <div class="form-group">
-               @Html.LabelFor(model => model.PaymentType, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.PaymentType, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <label>
-                 Cash   @Html.RadioButtonFor(model => model.PaymentType, 1, new { @checked = "checked" } )
+                        Cash   @Html.RadioButtonFor(model => model.PaymentType, 1, new { @checked = "checked" })
 
 
-                  Credit @Html.RadioButtonFor(model => model.PaymentType, 0)
-                        </label>  
+                        Credit @Html.RadioButtonFor(model => model.PaymentType, 0)
+                    </label>
                 </div>
 
 
@@ -99,7 +105,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2"> Expire Time</label>
-                    <select name='expireMM' id='expireMM' >
+                    <select name='expireMM' id='expireMM'>
 
                         <option value=''>Month</option>
                         <option value='01'>January</option>
@@ -170,31 +176,56 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TotalPrice, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                
-               
- 
-                <input type="number" value=@ViewBag.TotalPrice name="TotalPrice" readonly class="form-control"  /> 
-              
+                @*@{
+                    double price = ViewBag.TotalPrice;
+                }*@
+
+
+                <input type="number" value=@ViewBag.TotalPrice name="TotalPrice" readonly class="form-control" />
+
                 @Html.ValidationMessageFor(model => model.TotalPrice, "", new { @class = "text-danger" })
             </div>
         </div>
 
 
-    
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
-}
+                    }
 
 
 <div>
-    @Html.ActionLink("Continue to fill your sack", "RestaurantPage")
+    @Html.ActionLink("Continue to fill your sack", "RestaurantPage");
 </div>
 
 <script>
+
+
+
+
+    $(document).ready(function () {
+    
+        $("#check").change(function () {
+            if ($(this).is(":checked")) {
+                $("#def").attr("name", "temp");
+                $("#al").attr("name", "Address");
+                //$('.alternateAD').val("");
+            }
+            else {
+                $("#def").attr("name", "Address");
+                $("#al").attr("name", "temp");
+
+
+              
+
+            }
+        });
+    });
+
     $(document).ready(function () {
         $("#addAdress").hide();
         $(".creditInfo").hide();
