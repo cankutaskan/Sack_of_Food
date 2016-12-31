@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace SOF301.Controllers
 {
+    [Authorize(Roles = "1")]
     public class AdminController : Controller
     {
         // GET: Admin

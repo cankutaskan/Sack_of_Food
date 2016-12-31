@@ -74,10 +74,7 @@ namespace SOF301.Controllers
                         try
                         {
                             SOFEntity.getDb().Orders.Add(order);
-
                             SOFEntity.getDb().SaveChanges();
-
-
                         }
                         catch (Exception e)
                         {
@@ -88,7 +85,6 @@ namespace SOF301.Controllers
                     var ctx = Request.GetOwinContext();
                     var authManager = ctx.Authentication;
                     authManager.SignIn(identity);
-
                     switch (user.RoleID)
                     {
                         case 1:

@@ -11,6 +11,7 @@ using System.Security.Claims;
 
 namespace SOF301.Controllers
 {
+    [Authorize(Roles = "2,1")]
     public class RestaurantOwnerController : Controller
     {
 

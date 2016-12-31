@@ -11,6 +11,7 @@ using System.Net;
 
 namespace SOF301.Controllers
 {
+    [Authorize(Roles = "3,1")]
     public class CustomerController : Controller
     {
         // GET: Customer
@@ -19,6 +20,7 @@ namespace SOF301.Controllers
 
         public ActionResult Index(String sortOrder, string currentFilter, string searchString, int? page)
         {
+
             int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
 
             var districtID = SOFEntity.getDb().Users.Where(u => u.UserID == user).Select(r => r.DistrictID).FirstOrDefault();
