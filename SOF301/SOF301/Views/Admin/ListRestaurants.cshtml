@@ -9,10 +9,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Cities.Name)
+            City
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Districts.Name)
+            District
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Users.UserName)
@@ -35,7 +35,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Cities.Name)
@@ -59,7 +60,17 @@
             @Html.DisplayFor(modelItem => item.FinishingHour)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RestaurantStatu)
+            @{
+                
+                if ((bool)item.RestaurantStatu)
+                {
+                    <p>Avaliable</p>
+                }
+                else
+                {
+                    <p>Not Avaliable</p>
+                }
+            }
         </td>
         <td>
             @Html.ActionLink("Delete", "DeleteRestaurant", new { id=item.RestaurantID })
