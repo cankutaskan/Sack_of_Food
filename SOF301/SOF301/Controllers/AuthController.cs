@@ -297,7 +297,9 @@ namespace SOF301.Controllers
         {
             if (ModelState.IsValid)
             {
-                SOFEntity.getDb().Entry(users).State = EntityState.Modified;
+                Users originalUser = SOFEntity.getDb().Users.Find(users.UserID);
+                SOFEntity.getDb().Entry(originalUser).CurrentValues.SetValues(users);
+                //SOFEntity.getDb().Entry(users).State = EntityState.Modified;
                 SOFEntity.getDb().SaveChanges();
                 return RedirectToAction("Details");
             }

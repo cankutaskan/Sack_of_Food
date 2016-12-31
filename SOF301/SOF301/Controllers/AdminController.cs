@@ -13,7 +13,7 @@ namespace SOF301.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("ListRequests");
         }
 
         public ActionResult ListRequests()
