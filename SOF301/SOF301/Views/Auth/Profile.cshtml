@@ -1,7 +1,7 @@
 ﻿@model SOF301.Models.Users
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Profile";
 }
 
 <h2>Profile</h2>
@@ -74,6 +74,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit","Edit", new { id = Model.UserID }) 
+    @Html.ActionLink("Edit","EditUser", new { id = Model.UserID }) 
   
 </p>
