@@ -36,8 +36,12 @@ namespace SOF301.Models
 
         public byte? OrderStatus { get; set; }
 
+        public int? RestaurantID { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderItems> OrderItems { get; set; }
+
+        public virtual Restaurants Restaurants { get; set; }
 
         public virtual Users Users { get; set; }
     }

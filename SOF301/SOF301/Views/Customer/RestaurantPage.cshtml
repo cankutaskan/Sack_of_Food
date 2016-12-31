@@ -1,7 +1,7 @@
-﻿ @model IEnumerable<SOF301.Models.Foods>
-  @Styles.Render("/Content/RestaurantPage.css")
+﻿@model IEnumerable<SOF301.Models.Foods>
+@Styles.Render("/Content/RestaurantPage.css")
 
- 
+
 
 <h2>@ViewBag.Title</h2>
 <div class="container">
@@ -21,7 +21,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Description)
                     </th>
-                    
+
 
                 </tr>
 
@@ -32,9 +32,9 @@
                         <tr>
 
                             <td>
-                          
 
-                                
+
+
                                 <div class="name">
                                     <div class="add" style="float:left;">
                                         <span class="glyphicon glyphicon-plus" style="margin-left:-30px;"></span>
@@ -43,11 +43,11 @@
 
                                     </div>
                                     @Html.DisplayFor(modelItem => item.Name)
-                                   
+
                                 </div>
-                                
-                               
-                                
+
+
+
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Price)
@@ -55,7 +55,7 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Description)
                             </td>
-                            
+
 
                         </tr>
 
@@ -68,13 +68,14 @@
 
             </table>
 
+
         </div>
         <div class="col-md-2">
-           
+
             <div id="partial">
-             
+
             </div>
-        
+
 
         </div>
     </div>
@@ -94,21 +95,21 @@
             error: function () {
                 $("#partial").html("ERROR");
             }
-    });
-    $(".add").click(function () {
-        var id = $(this).closest('div').find('.hidenID').text();
-        $('.hidenID').hide() //**hide your span
-        $.ajax({
-            url: "/Customer/ItemBasket/?FoodID=" + id,
-            datatype: "text",
-            type: "GET",
-            success: function (data) {
-                $('#partial').html(data);
-            },
-            error: function () {
-                $("#partial").html("ERROR");
-            }
-      
+        });
+        $(".add").click(function () {
+            var id = $(this).closest('div').find('.hidenID').text();
+            $('.hidenID').hide() //**hide your span
+            $.ajax({
+                url: "/Customer/ItemBasket/?FoodID=" + id,
+                datatype: "text",
+                type: "GET",
+                success: function (data) {
+                    $('#partial').html(data);
+                },
+                error: function () {
+                    $("#partial").html("ERROR");
+                }
+
             });
         });
 
@@ -118,3 +119,42 @@
 
 </script>
 
+<script>
+
+
+    //$(document).ready(function () {
+    //    alert("mdf");
+    //    $("#clearBasker").click(function () {
+    //        alert("hiiii");
+    //            $.ajax({
+    //            url: "/Customer/ClearBasket",
+    //            datatype: "text",
+    //            type: "GET",
+    //            success: function (data) {
+    //                $('#partial').html(data);
+    //            },
+    //            error: function () {
+    //                $("#partial").html("ERROR");
+    //            }
+    //        });
+    //    });
+    //});
+
+    $(document).on("click", ".clearBasket", function () {
+
+    $.ajax({
+            url: "/Customer/ClearBasket",
+            datatype: "text",
+            type: "GET",
+            success: function (data) {
+                $('#partial').html(data);
+            },
+            error: function () {
+                $("#partial").html("ERROR");
+            }
+        });
+    });
+
+
+
+</script>

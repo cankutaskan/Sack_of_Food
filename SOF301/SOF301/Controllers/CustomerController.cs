@@ -111,6 +111,29 @@ namespace SOF301.Controllers
             return PartialView(basket);
         }
 
+        public ActionResult ClearBasket()
+        {
+            int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
+            var temp = SOFEntity.getDb().OrderItems.Where(o => o.Orders.UserID == user && o.Orders.OrderStatus == null).ToList();
+            if (temp.Any())
+            {
+                foreach (var item in temp)
+                {
+                    SOFEntity.getDb().OrderItems.Remove(item);
+
+
+                }
+                SOFEntity.getDb().SaveChanges();
+
+            }
+
+
+            var basket = SOFEntity.getDb().OrderItems.Where(o => o.Orders.UserID == user && o.Orders.OrderStatus == null).ToList();
+
+            return PartialView("ItemBasket", basket);
+
+        }
+
         public ActionResult Payment()
         {
             int userID = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
@@ -150,16 +173,16 @@ namespace SOF301.Controllers
         {
 
             int userID = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
-            
-            
+
+
             var user = SOFEntity.getDb().Users.Find(userID);
-           
+
             DateTime current = new DateTime();
-           
+
             var order = SOFEntity.getDb().Orders.Where(o => o.UserID == userID && o.OrderStatus == null).FirstOrDefault();
             order.UserID = userID;
             order.Telephone = user.Telephone;
-            order.Date = current;
+         //   order.Date = current;
             order.TotalPrice = orders.TotalPrice;
             order.Address = orders.Address;
             order.PaymentType = orders.PaymentType;
@@ -179,7 +202,7 @@ namespace SOF301.Controllers
 
             try
             {
-                SOFEntity.getDb().Orders.Add(newOrder);
+             SOFEntity.getDb().Orders.Add(newOrder);
 
                 SOFEntity.getDb().SaveChanges();
             }
@@ -191,9 +214,11 @@ namespace SOF301.Controllers
             }
             return RedirectToAction("Index");
 
-            ViewBag.UserID = new SelectList(SOFEntity.getDb().Users, "UserID", "UserName", orders.UserID);
-            return View();
+            //  ViewBag.UserID = new SelectList(SOFEntity.getDb().Users, "UserID", "UserName", orders.UserID);
+
         }
+
+
 
         public ActionResult ListOrders()
         {

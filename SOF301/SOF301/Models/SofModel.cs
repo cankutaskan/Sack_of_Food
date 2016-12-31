@@ -8,7 +8,7 @@ namespace SOF301.Models
     public partial class SofModel : DbContext
     {
         public SofModel()
-            : base("name=SofModel")
+            : base("name=SofModel1")
         {
         }
 
@@ -28,14 +28,12 @@ namespace SOF301.Models
             modelBuilder.Entity<Restaurants>()
                 .HasMany(e => e.Requests)
                 .WithRequired(e => e.Restaurants)
-                .WillCascadeOnDelete(true);
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Users>()
                 .HasMany(e => e.Requests)
                 .WithRequired(e => e.Users)
-                .WillCascadeOnDelete(true);
-
-            
+                .WillCascadeOnDelete(false);
         }
     }
 }
