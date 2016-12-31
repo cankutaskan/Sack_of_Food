@@ -235,8 +235,8 @@ namespace SOF301.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var OrderID = SOFEntity.getDb().OrderItems.Find(id).OrderID;
-            var list = SOFEntity.getDb().OrderItems.Where(o => o.OrderID == OrderID).ToList();
+         //   var OrderID = SOFEntity.getDb().OrderItems.Find(id).OrderID;
+            var list = SOFEntity.getDb().OrderItems.Where(o => o.OrderID == id).ToList();
 
             return View(list);
         }

@@ -69,6 +69,49 @@ namespace SOF301.Controllers
             return View(restaurants);
         }
 
+        public ActionResult Orders()
+        {
+            var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
+
+           int id = new SofModel().Restaurants
+                .Where(u => u.UserID == userID)
+                .Select(u => u.RestaurantID).FirstOrDefault();
+
+
+            var orders = SOFEntity.getDb().Orders.Where(o => o.RestaurantID == id && o.OrderStatus == 0);
+            return View(orders.ToList());
+        }
+
+        public ActionResult OrderDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //   var OrderID = SOFEntity.getDb().OrderItems.Find(id).OrderID;
+            var list = SOFEntity.getDb().OrderItems.Where(o => o.OrderID == id).ToList();
+
+            return View(list);
+        }
+
+        public ActionResult AcceptOrder(int id)
+        {
+            if (id != null)
+            {
+                Orders or = SOFEntity.getDb().Orders.Find(id);
+
+
+                Orders updatedOr = or;
+                updatedOr.OrderStatus = 1;
+
+                SOFEntity.getDb().Entry(or).CurrentValues.SetValues(updatedOr);
+                SOFEntity.getDb().SaveChanges();
+
+
+            }
+            return RedirectToAction("Orders");
+        }
+
    
         
     }

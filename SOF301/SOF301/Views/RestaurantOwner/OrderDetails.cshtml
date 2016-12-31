@@ -1,7 +1,7 @@
-﻿
-
-@model IEnumerable<SOF301.Models.OrderItems>
-
+﻿@model IEnumerable<SOF301.Models.OrderItems>
+@{
+    ViewBag.Title = "OrderDetails";
+}
 
 
 
@@ -15,7 +15,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Foods.Name)
         </th>
-       
+
         <th>
             @Html.DisplayNameFor(model => model.FoodNumber)
         </th>
@@ -28,16 +28,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Foods.Name)
             </td>
-          
+
             <td>
                 @Html.DisplayFor(modelItem => item.FoodNumber)
             </td>
-          
+
         </tr>
     }
 
 </table>
 <p>
-  
-    @Html.ActionLink("Back to List", "ListOrders")
+
+    @Html.ActionLink("Back to List", "Orders")
 </p>
+
+
