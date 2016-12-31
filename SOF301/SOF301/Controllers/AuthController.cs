@@ -17,7 +17,7 @@ namespace SOF301.Controllers
         [HttpGet]
         public ActionResult Login(string url)
         {
-
+            
             return View();
         }
 
@@ -30,7 +30,7 @@ namespace SOF301.Controllers
                 Response.Write("model not valid");
                 return View(model); //Returns the view with the input values so that the user doesn't have to retype again
             }
-
+            
 
             Users user = SOFEntity.getDb().Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
 
@@ -262,7 +262,7 @@ namespace SOF301.Controllers
             return View(model);
         }
         
-        public ActionResult Details(int? id)
+        public ActionResult Profile(int? id)
 
         {
             var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
@@ -272,7 +272,7 @@ namespace SOF301.Controllers
             return View(users);
         }
         
-        public ActionResult Edit(int? id)
+        public ActionResult EditUser(int? id)
         {
             if (id == null)
             {
@@ -285,19 +285,21 @@ namespace SOF301.Controllers
             }
             ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name", users.CityID);
             ViewBag.RoleID = new SelectList(SOFEntity.getDb().Roles, "RoleID", "Name", users.RoleID);
+            users.Password = CustomDecrypt.Decrypt(users.Password);
             return View(users);
         }
         
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "UserID,RoleID,UserName,Password,Name,Surname,Telephone,Address,CityID,DistrictID,Email")] Users users)
+        public ActionResult EditUser([Bind(Include = "UserID,RoleID,UserName,Password,Name,Surname,Telephone,Address,CityID,DistrictID,Email")] Users users)
         {
             if (ModelState.IsValid)
             {
                 Users originalUser = SOFEntity.getDb().Users.Find(users.UserID);
+                users.Password = CustomEnrypt.Encrypt(users.Password);
                 SOFEntity.getDb().Entry(originalUser).CurrentValues.SetValues(users);
                 //SOFEntity.getDb().Entry(users).State = EntityState.Modified;
                 SOFEntity.getDb().SaveChanges();
-                return RedirectToAction("Details");
+                return RedirectToAction("Profile");
             }
             ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name", users.CityID);
             ViewBag.RoleID = new SelectList(SOFEntity.getDb().Roles, "RoleID", "Name", users.RoleID);
