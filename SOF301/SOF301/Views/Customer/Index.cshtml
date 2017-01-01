@@ -8,10 +8,15 @@
 <h2>Restaurants</h2>
 @using (Html.BeginForm("Index", "Customer", FormMethod.Get))
 {
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
+
+        <div class="form-group">
+            @Html.DropDownList("SearchBy", ViewBag.Filter as IEnumerable<SelectListItem>, new { @class = "form-control col-md-2" })
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new  { @class = "form-control  col-md-2", @placeholder="Enter your search"} )
+            <input type="submit" value="Search" class="btn btn-primary" />  
+
+        </div>
+            
+
 
 }
 
