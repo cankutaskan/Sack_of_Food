@@ -5,7 +5,7 @@
 @Scripts.Render("~/Content/jquery.backstretch.min.js")
 
 
-
+<h1>Register</h1>
 
 @Html.ValidationSummary(true)
 
@@ -22,49 +22,50 @@
 
                         <div class="form-group">
 
-                            @Html.LabelFor(u => u.Users.UserName)
+                            @*@Html.LabelFor(u => u.Users.UserName)*@
                             @Html.TextBoxFor(u => u.Users.UserName, new { @placeholder = "UserName", @class = "form-control" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(u => u.Users.Password)
+                            @*@Html.LabelFor(u => u.Users.Password)*@
                             @Html.PasswordFor(u => u.Users.Password, new { @placeholder = "Password", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(u => u.Users.Email)
+                            @*@Html.LabelFor(u => u.Users.Email)*@
                             @Html.TextBoxFor(u => u.Users.Email, new { @placeholder = "Email", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(u => u.Users.Name)
+                            @*@Html.LabelFor(u => u.Users.Name)*@
                             @Html.TextBoxFor(u => u.Users.Name, new { @placeholder = "Name", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
 
-                            @Html.LabelFor(u => u.Users.Surname)
+                            @*@Html.LabelFor(u => u.Users.Surname)*@
                             @Html.TextBoxFor(u => u.Users.Surname, new { @placeholder = "Last Name", @class = "form-control" })
                         </div>
                         <div class="form-group">
 
-                            @Html.LabelFor(u => u.Users.Telephone)
+                            @*@Html.LabelFor(u => u.Users.Telephone)*@
                             @Html.TextBoxFor(u => u.Users.Telephone, new { @placeholder = "Telephone", @class = "form-control" })
                         </div>
                         <div class="form-group">
 
-                            @Html.LabelFor(u => u.Users.Address)
-                            @Html.TextBoxFor(u => u.Users.Address, new { @placeholder = "Address", @class = "form-control" })
+                            @*@Html.LabelFor(u => u.Users.Address)*@
+                            @Html.TextAreaFor(u=>u.Users.Address)
+                       @*@Html.TextBoxFor(u => u.Users.Address, new { @placeholder = "Address", @class = "form-control" })*@
 
                         </div>
                         <div class="form-group">
 
-                            @Html.LabelFor(u => u.Users.CityID)
+                            @*@Html.LabelFor(u => u.Users.CityID)*@
                             @Html.DropDownListFor(u => u.Users.CityID, ViewBag.UserCityID as IEnumerable<SelectListItem>, new { @placeholder = "City", @class = "form-control" })
                         </div>
 
 
                         <div class="form-group">
-                            @Html.LabelFor(u => u.Users.DistrictID)
+                            @*@Html.LabelFor(u => u.Users.DistrictID)*@
                             @Html.DropDownListFor(u => u.Users.DistrictID, ViewBag.UserDistrictID as IEnumerable<SelectListItem>, new { @placeholder = "District", @class = "form-control" })
                         </div>
 
@@ -73,7 +74,7 @@
                             I am a restaurant owner.
                         </p>
                         <div id="customerRegister">
-                            <button class="form-control" type="submit">Register</button>
+                            <button class="btn btn-primary form-control" type="submit">Register</button>
                         </div>
 
                     </div>
@@ -126,7 +127,7 @@
 
 
 
-                        <button type="submit" class="form-control">Send Request</button>
+                        <button type="submit" class="btn btn-primary form-control">Send Request</button>
 
                     </div>
                 </div>
@@ -163,7 +164,7 @@
     .form-bottom {
         padding: 25px 25px 30px 25px;
         background: #444;
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(0, 0, 0, 0.7);
         -moz-border-radius: 0 0 4px 4px;
         -webkit-border-radius: 0 0 4px 4px;
         border-radius: 0 0 4px 4px;
@@ -202,6 +203,20 @@
         border-right: 1px solid #fff;
         border-right: 1px solid rgba(255, 255, 255, 0.6);
     }
+ ::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #000;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #000;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #000;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color:    #000;
+}
 </style>
 
 

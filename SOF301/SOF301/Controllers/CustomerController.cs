@@ -13,15 +13,14 @@ namespace SOF301.Controllers
 {
     public class CustomerController : Controller
     {
-        // GET: Customer
 
 
-
-        public ActionResult Index(String sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(String sortOrder, string currentFilter, string searchString, int? page, string SearchBy)
         {
+
             int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
 
-            var districtID = SOFEntity.getDb().Users.Where(u => u.UserID == user).Select(r => r.DistrictID).FirstOrDefault();
+        //    var districtID = SOFEntity.getDb().Users.Where(u => u.UserID == user).Select(r => r.DistrictID).FirstOrDefault();
 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
             ViewBag.CurrentSort = sortOrder;
@@ -35,18 +34,49 @@ namespace SOF301.Controllers
 
             }
             ViewBag.CurrentFilter = searchString;
+            System.Threading.Thread.Sleep(2000);
+            var cityID = SOFEntity.getDb().Users.Where(u => u.UserID == user).FirstOrDefault().CityID;
+            var restaurant = SOFEntity.getDb().Restaurants.Where(r => r.CityID == cityID);
+        
 
 
-            var restaurant = SOFEntity.getDb().Restaurants.Where(r => r.DistrictID == districtID);
+
 
             if (!String.IsNullOrEmpty(searchString))
             {
 
 
-                restaurant = restaurant.Where(r => r.Name.Contains(searchString));
+                //   restaurant = restaurant.Where(r => r.Name.Contains(searchString));
+
+
+                switch (SearchBy)
+                {
+
+                    case "0":
+                        restaurant = restaurant.Where(r => r.Name.Contains(searchString));
+
+                        break;
+
+      
+
+                    case "1":
+
+
+                        restaurant = restaurant.Where(r => r.Districts.Name.Contains(searchString));
+
+                        break;
 
 
 
+
+                    default:
+
+                        break;
+
+
+
+
+                }
 
 
             }
@@ -61,8 +91,21 @@ namespace SOF301.Controllers
                     restaurant = restaurant.OrderBy(s => s.Name);
                     break;
             }
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            items.Add(new SelectListItem { Text = "Name", Value = "0", Selected = true });
+
+            items.Add(new SelectListItem { Text = "District", Value = "1" });
+
+           
+
+            //   items.Add(new SelectListItem { Text = "Food", Value = "3" });
+
+            ViewBag.Filter = items;
+
             int pageSize = 3;
             int pageNumber = (page ?? 1);
+           
             return View(restaurant.ToPagedList(pageNumber, pageSize));
         }
 
@@ -182,7 +225,7 @@ namespace SOF301.Controllers
             var order = SOFEntity.getDb().Orders.Where(o => o.UserID == userID && o.OrderStatus == null).FirstOrDefault();
             order.UserID = userID;
             order.Telephone = user.Telephone;
-         //   order.Date = current;
+            //   order.Date = current;
             order.TotalPrice = orders.TotalPrice;
             order.Address = orders.Address;
             order.PaymentType = orders.PaymentType;
@@ -202,7 +245,7 @@ namespace SOF301.Controllers
 
             try
             {
-             SOFEntity.getDb().Orders.Add(newOrder);
+                SOFEntity.getDb().Orders.Add(newOrder);
 
                 SOFEntity.getDb().SaveChanges();
             }
