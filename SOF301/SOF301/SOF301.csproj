@@ -190,6 +190,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\FoodsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RestaurantOwnerController.cs" />
     <Compile Include="Controllers\TempOrdersController.cs" />
@@ -286,6 +287,13 @@
     <Content Include="Views\Auth\ForgotPassword.cshtml" />
     <Content Include="Views\Admin\ListRequests.cshtml" />
     <Content Include="Views\Admin\ListUsers.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\RestaurantOwner\Index.cshtml" />
+    <Content Include="Views\RestaurantOwner\Orders.cshtml" />
+    <Content Include="Views\RestaurantOwner\OrderDetails.cshtml" />
+    <Content Include="Views\RestaurantOwner\FoodCreate.cshtml" />
+    <Content Include="Views\RestaurantOwner\FoodEdit.cshtml" />
+    <Content Include="Views\RestaurantOwner\FoodIndex.cshtml" />
     <Content Include="Views\Admin\ListRestaurants.cshtml" />
   </ItemGroup>
   <ItemGroup />

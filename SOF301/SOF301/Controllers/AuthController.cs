@@ -286,7 +286,11 @@ namespace SOF301.Controllers
             }
             ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name", users.CityID);
             ViewBag.RoleID = new SelectList(SOFEntity.getDb().Roles, "RoleID", "Name", users.RoleID);
+
+            ViewBag.DistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name", users.DistrictID);
+
             users.Password = CustomDecrypt.Decrypt(users.Password);
+
             return View(users);
         }
         
@@ -295,15 +299,18 @@ namespace SOF301.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 Users originalUser = SOFEntity.getDb().Users.Find(users.UserID);
                 users.Password = CustomEnrypt.Encrypt(users.Password);
                 SOFEntity.getDb().Entry(originalUser).CurrentValues.SetValues(users);
                 //SOFEntity.getDb().Entry(users).State = EntityState.Modified;
+
                 SOFEntity.getDb().SaveChanges();
                 return RedirectToAction("Profile");
             }
             ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name", users.CityID);
             ViewBag.RoleID = new SelectList(SOFEntity.getDb().Roles, "RoleID", "Name", users.RoleID);
+            ViewBag.DistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name", users.DistrictID);
             return View(users);
         }
 
