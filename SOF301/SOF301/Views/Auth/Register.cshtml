@@ -31,31 +31,25 @@
                         </div>
                         <div class="form-group">
                             @Html.ValidationMessageFor(model => model.Users.Email, "", new { @class = "bg-primary" })
-                            @*@Html.LabelFor(u => u.Users.Email)*@
                             @Html.TextBoxFor(u => u.Users.Email, new { @placeholder = "Email", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
                             @Html.ValidationMessageFor(model => model.Users.Name, "", new { @class = "bg-primary" })
-                            @Html.LabelFor(u => u.Users.Name)
                             @Html.TextBoxFor(u => u.Users.Name, new { @placeholder = "Name", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
-<<<<<<< HEAD
                             @Html.ValidationMessageFor(model => model.Users.Surname, "", new { @class = "bg-primary" })
-                            @Html.LabelFor(u => u.Users.Surname)
                             @Html.TextBoxFor(u => u.Users.Surname, new { @placeholder = "Last Name", @class = "form-control" })
                         </div>
                         <div class="form-group">
                             @Html.ValidationMessageFor(model => model.Users.Telephone, "", new { @class = "bg-primary" })
-                            @Html.LabelFor(u => u.Users.Telephone)
                             @Html.TextBoxFor(u => u.Users.Telephone, new { @placeholder = "Telephone", @class = "form-control" })
                         </div>
                         <div class="form-group">
                             @Html.ValidationMessageFor(model => model.Users.Address, "", new { @class = "bg-primary" })
-                            @Html.LabelFor(u => u.Users.Address)
-                            @Html.TextAreaFor(u=>u.Users.Address)
+                            @Html.TextAreaFor(u=>u.Users.Address, new { @placeholder = "Address", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
@@ -82,10 +76,6 @@
 
 
                 </div>
-
-
-                
-
             
 
             <div class="col-md-4" id="rownerRegister">
@@ -113,11 +103,13 @@
                         </div>
                         <div class="form-group">
                             @Html.ValidationMessageFor(model => model.Restaurants.StartingHour, "", new { @class = "bg-primary" })
+                            @Html.LabelFor(r => r.Restaurants.StartingHour)
                             @Html.EditorFor(r => r.Restaurants.StartingHour, new { @placeholder = "StartingHour", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
                             @Html.ValidationMessageFor(model => model.Restaurants.FinishingHour, "", new { @class = "bg-primary" })
+                            @Html.LabelFor(r=>r.Restaurants.FinishingHour)
                             @Html.EditorFor(r => r.Restaurants.FinishingHour, new { @placeholder = "FinishHour", @class = "form-control" })
                         </div>	
 
