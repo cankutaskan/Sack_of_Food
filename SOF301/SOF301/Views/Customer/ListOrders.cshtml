@@ -26,7 +26,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
-      
+        <th>
+            Statu
+        </th>
         <th></th>
     </tr>
 
@@ -46,10 +48,39 @@
             @Html.DisplayFor(modelItem => item.Address)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PaymentType)
+            @{ 
+               
+                
+                
+                if (item.PaymentType==true)
+             {
+                <p>  Cash  </p>
+             }
+                       if (item.PaymentType == false)
+               {
+                <p>  Credit  </p>
+               }
+              
+
+
+}
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @{ if(item.OrderStatus == 0){
+                   <p> Ordered   </p>
+               }
+
+               if(item.OrderStatus == 1){
+                <p> Order Accepted </p>
+            }
+               if(item.OrderStatus == 2){
+                  <p>Order Canceled  </p>
+            }
+            }
+
         </td>
       
         <td>

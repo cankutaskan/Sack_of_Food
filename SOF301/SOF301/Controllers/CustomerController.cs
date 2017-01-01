@@ -227,7 +227,7 @@ namespace SOF301.Controllers
             var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
 
 
-            var orders = SOFEntity.getDb().Orders.Where(o => o.UserID == userID);
+            var orders = SOFEntity.getDb().Orders.Where(o => o.UserID == userID && (o.OrderStatus==0 || o.OrderStatus ==1 || o.OrderStatus == 2 ));
             return View(orders.ToList());
         }
 
@@ -237,8 +237,8 @@ namespace SOF301.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var OrderID = SOFEntity.getDb().OrderItems.Find(id).OrderID;
-            var list = SOFEntity.getDb().OrderItems.Where(o => o.OrderID == OrderID).ToList();
+         //   var OrderID = SOFEntity.getDb().OrderItems.Find(id).OrderID;
+            var list = SOFEntity.getDb().OrderItems.Where(o => o.OrderID == id).ToList();
 
             return View(list);
         }

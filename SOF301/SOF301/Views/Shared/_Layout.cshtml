@@ -31,25 +31,9 @@
 
                   
 
-                    @if (User.Identity.IsAuthenticated)
-                    {
-
-                        if (System.Security.Claims.ClaimsPrincipal.Current.IsInRole("3"))
-                        {
-                                @Html.ActionLink("Sack Of Food", "Index", "Customer", new { area = "" }, new { @class = "navbar-brand" })
-                        }
-                        if (System.Security.Claims.ClaimsPrincipal.Current.IsInRole("2"))
-                        {
-                                @Html.ActionLink("Sack Of Food", "Index", "RestaurantOwner", new { area = "" }, new { @class = "navbar-brand" })
-                        }
-                        if (System.Security.Claims.ClaimsPrincipal.Current.IsInRole("1"))
-                        {
-                                @Html.ActionLink("Sack Of Food", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-                        }
-                    }
 
 
-
+                    @Html.ActionLink("Sack Of Food", "Index", "Customer", new { area = "" }, new { @class = "navbar-brand" })
 
                 </div>
                 <div class="navbar-collapse collapse">
@@ -58,30 +42,41 @@
                         @if (User.Identity.IsAuthenticated)
                         {
 
-                            if (System.Security.Claims.ClaimsPrincipal.Current.IsInRole("3"))
+                            var claimsIdentity = User.Identity as System.Security.Claims.ClaimsIdentity;
+
+                            if (claimsIdentity != null)
                             {
+                                var c = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Role);
+
+
+                                if (c.Value.Equals("3"))
+                                {
+
+
+
                                     <li>@Html.ActionLink("Home", "Index", "Customer")</li>
                                     <li>@Html.ActionLink("My Orders", "ListOrders", "Customer")</li>
-                                    <li>@Html.ActionLink("Profile", "Profile", "Auth")</li>
+                                    <li>@Html.ActionLink("Profile", "Details", "Auth")</li>
+                                }
+
+                                if (c.Value.Equals("2"))
+                                {
+
+                                    <li>@Html.ActionLink("Orders", "Orders", "RestaurantOwner")</li>
+                                    <li>@Html.ActionLink("My Restaurant", "Details", "RestaurantOwner")</li>
+                                    <li>@Html.ActionLink("Foods", "FoodIndex", "RestaurantOwner")</li>
+                                    <li>@Html.ActionLink("Profile", "Details", "Auth")</li>
+                                }
+                                if (c.Value.Equals("1"))
+                                {
+
+                                    <li>@Html.ActionLink("Requests", "", "")</li>
+                                    <li>@Html.ActionLink("Restaurants", "", "")</li>
+                                    <li>@Html.ActionLink("Profile", "Details", "Auth")</li>
+                                }
                             }
 
-                            if (System.Security.Claims.ClaimsPrincipal.Current.IsInRole("2"))
-                            {
-                                    <li>@Html.ActionLink("Orders", "", "")</li>
-                                    <li>@Html.ActionLink("My Restaurant", "Details", "Restaurants")</li>
-                                    <li>@Html.ActionLink("Foods", "", "")</li>
-                                    <li>@Html.ActionLink("Profile", "Profile", "Auth")</li>
-                            }
-                            if (System.Security.Claims.ClaimsPrincipal.Current.IsInRole("1"))
-                            {
-                                    <li>@Html.ActionLink("Requests", "ListRequests", "Admin")</li>
-                                    <li>@Html.ActionLink("Restaurants", "ListRestaurants", "Admin")</li>
-                                    <li>@Html.ActionLink("Users", "ListUsers", "Admin")</li>
-                                    <li>@Html.ActionLink("Profile", "Profile", "Auth")</li>
-                            }
                         }
-
-
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
