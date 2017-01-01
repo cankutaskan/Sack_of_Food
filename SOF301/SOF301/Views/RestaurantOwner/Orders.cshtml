@@ -60,6 +60,7 @@
 
                 @Html.ActionLink("OrderItems", "OrderDetails", new { id = item.OrderID }) |
                 @Html.ActionLink("Accept", "AcceptOrder", "RestaurantOwner", new { id = item.OrderID }, null) |
+                @Html.ActionLink("Cancel", "CancelOrder", "RestaurantOwner", new { id = item.OrderID }, null) 
 
             </td>
         </tr>

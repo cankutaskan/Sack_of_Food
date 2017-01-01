@@ -76,6 +76,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.DistrictID, "District", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("DistrictID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DistrictID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
@@ -94,3 +102,37 @@
 <div>
     @Html.ActionLink("Back", "Details")
 </div>
+<script>
+    $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        $("#CityID").change(function () {
+            $("#DistrictID").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetDistrict")', // we are calling json method
+
+                dataType: 'json',
+
+                data: { id: $("#CityID").val() },
+                // here we are get value of selected country and passing same value  as inputto json method GetStates.
+
+
+                success: function (districts) {
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+
+                    $.each(districts, function (i, district) {
+                        $("#DistrictID").append('<option value="' + district.Value + '">' +
+                             district.Text + '</option>');
+                        // here we are adding option for States
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>

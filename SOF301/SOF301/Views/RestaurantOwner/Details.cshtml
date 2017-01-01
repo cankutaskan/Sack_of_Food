@@ -66,7 +66,15 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.RestaurantStatu)
+            @{
+                if ((bool)Model.RestaurantStatu) { 
+                    <p>Available</p>
+            }
+                else
+                {
+                    <p> Not Available</p>
+                }
+            }
         </dd>
      
 

@@ -225,7 +225,7 @@ namespace SOF301.Controllers
             var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
 
 
-            var orders = SOFEntity.getDb().Orders.Where(o => o.UserID == userID);
+            var orders = SOFEntity.getDb().Orders.Where(o => o.UserID == userID && (o.OrderStatus==0 || o.OrderStatus ==1 || o.OrderStatus == 2 ));
             return View(orders.ToList());
         }
 
