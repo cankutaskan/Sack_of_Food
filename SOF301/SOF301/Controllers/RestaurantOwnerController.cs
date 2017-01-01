@@ -12,6 +12,7 @@ using SOF301.Tools;
 
 namespace SOF301.Controllers
 {
+    [Authorize(Roles = "2,1")]
     public class RestaurantOwnerController : Controller
     {
        
@@ -61,9 +62,9 @@ namespace SOF301.Controllers
         {
             if (ModelState.IsValid)
             {
-                Restaurants orijinalRes = SOFEntity.getDb().Restaurants.Find(restaurants.RestaurantID);
-                SOFEntity.getDb().Entry(orijinalRes).CurrentValues.SetValues(restaurants);
-              //  SOFEntity.getDb().Entry(restaurants).State = EntityState.Modified;
+                Restaurants originalRestaurant = SOFEntity.getDb().Restaurants.Find(restaurants.UserID);
+                SOFEntity.getDb().Entry(originalRestaurant).CurrentValues.SetValues(restaurants);
+                //SOFEntity.getDb().Entry(restaurants).State = EntityState.Modified;
                 SOFEntity.getDb().SaveChanges();
                 return RedirectToAction("Details");
             }

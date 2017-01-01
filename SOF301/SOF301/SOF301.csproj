@@ -274,8 +274,8 @@
     <Content Include="Views\Customer\ItemBasket.cshtml" />
     <Content Include="Views\Customer\ListOrders.cshtml" />
     <Content Include="Views\Customer\Details.cshtml" />
-    <Content Include="Views\Auth\Details.cshtml" />
-    <Content Include="Views\Auth\Edit.cshtml" />
+    <Content Include="Views\Auth\Profile.cshtml" />
+    <Content Include="Views\Auth\EditUser.cshtml" />
     <Content Include="Views\RestaurantOwner\Details.cshtml" />
     <Content Include="Views\RestaurantOwner\Edit.cshtml" />
     <Content Include="Views\Customer\Payment.cshtml" />
@@ -294,6 +294,7 @@
     <Content Include="Views\RestaurantOwner\FoodCreate.cshtml" />
     <Content Include="Views\RestaurantOwner\FoodEdit.cshtml" />
     <Content Include="Views\RestaurantOwner\FoodIndex.cshtml" />
+    <Content Include="Views\Admin\ListRestaurants.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
