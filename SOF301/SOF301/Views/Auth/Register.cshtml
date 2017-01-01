@@ -21,51 +21,51 @@
                     <div class="form-bottom">
 
                         <div class="form-group">
-
-                            @*@Html.LabelFor(u => u.Users.UserName)*@
+                            @Html.ValidationMessageFor(model => model.Users.UserName, "", new { @class = "bg-primary" })
                             @Html.TextBoxFor(u => u.Users.UserName, new { @placeholder = "UserName", @class = "form-control" })
                         </div>
                         <div class="form-group">
-                            @*@Html.LabelFor(u => u.Users.Password)*@
+                            @Html.ValidationMessageFor(model => model.Users.Password, "", new { @class = "bg-primary" })
                             @Html.PasswordFor(u => u.Users.Password, new { @placeholder = "Password", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
+                            @Html.ValidationMessageFor(model => model.Users.Email, "", new { @class = "bg-primary" })
                             @*@Html.LabelFor(u => u.Users.Email)*@
                             @Html.TextBoxFor(u => u.Users.Email, new { @placeholder = "Email", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
-                            @*@Html.LabelFor(u => u.Users.Name)*@
+                            @Html.ValidationMessageFor(model => model.Users.Name, "", new { @class = "bg-primary" })
+                            @Html.LabelFor(u => u.Users.Name)
                             @Html.TextBoxFor(u => u.Users.Name, new { @placeholder = "Name", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
-
-                            @*@Html.LabelFor(u => u.Users.Surname)*@
+<<<<<<< HEAD
+                            @Html.ValidationMessageFor(model => model.Users.Surname, "", new { @class = "bg-primary" })
+                            @Html.LabelFor(u => u.Users.Surname)
                             @Html.TextBoxFor(u => u.Users.Surname, new { @placeholder = "Last Name", @class = "form-control" })
                         </div>
                         <div class="form-group">
-
-                            @*@Html.LabelFor(u => u.Users.Telephone)*@
+                            @Html.ValidationMessageFor(model => model.Users.Telephone, "", new { @class = "bg-primary" })
+                            @Html.LabelFor(u => u.Users.Telephone)
                             @Html.TextBoxFor(u => u.Users.Telephone, new { @placeholder = "Telephone", @class = "form-control" })
                         </div>
                         <div class="form-group">
-
-                            @*@Html.LabelFor(u => u.Users.Address)*@
+                            @Html.ValidationMessageFor(model => model.Users.Address, "", new { @class = "bg-primary" })
+                            @Html.LabelFor(u => u.Users.Address)
                             @Html.TextAreaFor(u=>u.Users.Address)
-                       @*@Html.TextBoxFor(u => u.Users.Address, new { @placeholder = "Address", @class = "form-control" })*@
 
                         </div>
                         <div class="form-group">
-
-                            @*@Html.LabelFor(u => u.Users.CityID)*@
+                            @Html.ValidationMessageFor(model => model.Users.CityID, "", new { @class = "bg-primary" })
                             @Html.DropDownListFor(u => u.Users.CityID, ViewBag.UserCityID as IEnumerable<SelectListItem>, new { @placeholder = "City", @class = "form-control" })
                         </div>
 
 
                         <div class="form-group">
-                            @*@Html.LabelFor(u => u.Users.DistrictID)*@
+                            @Html.ValidationMessageFor(model => model.Users.DistrictID, "", new { @class = "bg-primary" })
                             @Html.DropDownListFor(u => u.Users.DistrictID, ViewBag.UserDistrictID as IEnumerable<SelectListItem>, new { @placeholder = "District", @class = "form-control" })
                         </div>
 
@@ -94,38 +94,32 @@
                     <div class="form-bottom">
 
                         <div class="form-group">
-
-                            @Html.LabelFor(r => r.Restaurants.Name)
+                            @Html.ValidationMessageFor(model => model.Restaurants.Name, "", new { @class = "bg-primary" })
                             @Html.TextBoxFor(r => r.Restaurants.Name, new { @placeholder = "Restaurant Name", @class = "form-control" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(r => r.Restaurants.CityID)<br />
+                            @Html.ValidationMessageFor(model => model.Restaurants.CityID, "", new { @class = "bg-primary" })
                             @Html.DropDownListFor(r => r.Restaurants.CityID, ViewBag.RestaurantCityID as IEnumerable<SelectListItem>, new { @placeholder = "City", @class = "form-control" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(r => r.Restaurants.DistrictID)
+                            @Html.ValidationMessageFor(model => model.Restaurants.DistrictID, "", new { @class = "bg-primary" })
                             @Html.DropDownListFor(r => r.Restaurants.DistrictID, ViewBag.RestaurantDistrictID as IEnumerable<SelectListItem>, new { @placeholder = "District", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(r => r.Restaurants.Address)
+                            @Html.ValidationMessageFor(model => model.Restaurants.Address, "", new { @class = "bg-primary" })
                             @Html.TextBoxFor(r => r.Restaurants.Address, new { @placeholder = "Address", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
-
-                            @Html.LabelFor(r => r.Restaurants.StartingHour)
+                            @Html.ValidationMessageFor(model => model.Restaurants.StartingHour, "", new { @class = "bg-primary" })
                             @Html.EditorFor(r => r.Restaurants.StartingHour, new { @placeholder = "StartingHour", @class = "form-control" })
 
                         </div>
                         <div class="form-group">
-
-                            @Html.LabelFor(r => r.Restaurants.FinishingHour)
+                            @Html.ValidationMessageFor(model => model.Restaurants.FinishingHour, "", new { @class = "bg-primary" })
                             @Html.EditorFor(r => r.Restaurants.FinishingHour, new { @placeholder = "FinishHour", @class = "form-control" })
-                        </div>
-
-
-
+                        </div>	
 
                         <button type="submit" class="btn btn-primary form-control">Send Request</button>
 

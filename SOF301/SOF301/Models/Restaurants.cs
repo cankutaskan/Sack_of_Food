@@ -19,14 +19,17 @@ namespace SOF301.Models
         [Key]
         public int RestaurantID { get; set; }
 
-        [StringLength(50)]
+        [StringLength(36,MinimumLength = 8, ErrorMessage = "Restaurant name must between 8 and 36 characters.")]
+        [DataType(DataType.Text, ErrorMessage = "Restaurant name has invalid characters.")]
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Restaurant name has invalid characters.")]
         public string Name { get; set; }
 
         public int? CityID { get; set; }
 
         public int? DistrictID { get; set; }
 
-        [StringLength(256)]
+
+        [StringLength(256, MinimumLength = 8, ErrorMessage = "Restaurant address must between 8 and 256 characters.")]
         public string Address { get; set; }
 
         public int? UserID { get; set; }

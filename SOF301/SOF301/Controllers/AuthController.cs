@@ -44,7 +44,8 @@ namespace SOF301.Controllers
                     var identity = new ClaimsIdentity(new[]
                     {
                     new Claim(ClaimTypes.Sid, user.UserID.ToString()), //user id cookie
-                    new Claim(ClaimTypes.Role, user.RoleID.ToString()) //role id cookie
+                    new Claim(ClaimTypes.Role, user.RoleID.ToString()), //role id cookie
+                    new Claim(ClaimTypes.Name, user.UserName)
                     }, "ApplicationCookie");
 
                     var temp = SOFEntity.getDb().Orders.Where(o => o.OrderStatus == null && o.UserID == user.UserID).ToList();
@@ -102,7 +103,7 @@ namespace SOF301.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid Password!");
+                    ModelState.AddModelError("", "Incorrect Password!");
                     return View(model);
                 }
             }
