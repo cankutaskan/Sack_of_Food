@@ -5,16 +5,15 @@
 
 
 
-
-
-
 @Html.ValidationSummary(true)
 @using (Html.BeginForm())
-            {
+{
     <img src="~/Images/logo.png" />
+    <br />
+    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "bg-primary" })
     <input type="text" name="UserName" placeholder="email" class="email">
 
-
+    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "bg-primary" })
     <input type="password" name="Password" placeholder="password" class="pass">
 
     <button type="submit">Login</button>

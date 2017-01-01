@@ -87,7 +87,7 @@
                         <li>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <a href="@Url.Action("Logout", "Auth")">Logout</a>
+                                <a href="@Url.Action("Logout", "Auth")">@User.Identity.Name | Logout</a>
                             }
                             else
                             {
