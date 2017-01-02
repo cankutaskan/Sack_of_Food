@@ -8,6 +8,7 @@
         @{
             if (Model != null && Model.Any())
             {
+                double count = 0;
                 foreach (var item in Model)
                 {
 
@@ -19,17 +20,24 @@
 
                     </ul>
 
+                    
+                    count += (double)item.Foods.Price;
 
                 }
-                @Html.ActionLink("Continue to Payment", "Payment")<br />
+                
 
-                <a href="#" class="clearBasket">Clear Basket</a>
+                @Html.Display("Total Cost");
+                <p>Total Cost: @count</p>
+                        @Html.ActionLink("Continue to Payment", "Payment")<br />
+
+                        <a href="#" class="clearBasket">Clear Basket</a>
             }
             else
             {
                 <p> No item on your basket</p>
 
             }
+
         }
 
 
@@ -37,19 +45,14 @@
     </div>
 </div>
 
-    <div class="basket">
+<div class="basket">
 
-   
-</div> 
+
+</div>
 <style>
-    ul{
-        list-style-type:none;
-
+    ul {
+        list-style-type: none;
     }
-
-
-
-
 </style>
 
 

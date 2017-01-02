@@ -21,7 +21,7 @@ namespace SOF301.Controllers
 
             int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
 
-        //    var districtID = SOFEntity.getDb().Users.Where(u => u.UserID == user).Select(r => r.DistrictID).FirstOrDefault();
+            //    var districtID = SOFEntity.getDb().Users.Where(u => u.UserID == user).Select(r => r.DistrictID).FirstOrDefault();
 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
             ViewBag.CurrentSort = sortOrder;
@@ -37,8 +37,11 @@ namespace SOF301.Controllers
             ViewBag.CurrentFilter = searchString;
             System.Threading.Thread.Sleep(2000);
             var cityID = SOFEntity.getDb().Users.Where(u => u.UserID == user).FirstOrDefault().CityID;
-            var restaurant = SOFEntity.getDb().Restaurants.Where(r => r.CityID == cityID);
+            var restaurant = from res in SOFEntity.getDb().Restaurants
+                             where res.CityID == cityID
+                             select res;
         
+
 
 
 
@@ -58,7 +61,7 @@ namespace SOF301.Controllers
 
                         break;
 
-      
+
 
                     case "1":
 
@@ -98,7 +101,7 @@ namespace SOF301.Controllers
 
             items.Add(new SelectListItem { Text = "District", Value = "1" });
 
-           
+
 
             //   items.Add(new SelectListItem { Text = "Food", Value = "3" });
 
@@ -106,15 +109,17 @@ namespace SOF301.Controllers
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-           
+
             return View(restaurant.ToPagedList(pageNumber, pageSize));
         }
 
         [HttpGet]
         public ActionResult RestaurantPage(int? RestaurantID)
         {
+            int userID = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
             ViewBag.Title = SOFEntity.getDb().Restaurants.Where(r => r.RestaurantID == RestaurantID).Select(r => r.Name).FirstOrDefault();
-
+            var order = SOFEntity.getDb().Orders.Where(o => o.UserID == userID && o.OrderStatus == null).FirstOrDefault();
+            order.RestaurantID = RestaurantID;
             var foods = SOFEntity.getDb().Foods.Where(r => r.RestaurantID == RestaurantID);
             return View(foods.ToList());
 
@@ -195,6 +200,7 @@ namespace SOF301.Controllers
 
                 if (item != null)
                 {
+
                     totalPrice += (double)(item.Price);
 
                 }
@@ -207,7 +213,7 @@ namespace SOF301.Controllers
 
             ViewBag.Address = user.Address;
             ViewBag.TotalPrice = totalPrice;
-
+            ViewBag.RestaurantID = SOFEntity.getDb().Orders.Where(o => o.UserID == userID && o.OrderStatus == null).FirstOrDefault().RestaurantID;
 
             return View();
         }
@@ -221,23 +227,17 @@ namespace SOF301.Controllers
 
             var user = SOFEntity.getDb().Users.Find(userID);
 
-            DateTime current = new DateTime();
+            DateTime current = DateTime.Now;
 
             var order = SOFEntity.getDb().Orders.Where(o => o.UserID == userID && o.OrderStatus == null).FirstOrDefault();
             order.UserID = userID;
             order.Telephone = user.Telephone;
-            //   order.Date = current;
+            order.Date = current;
             order.TotalPrice = orders.TotalPrice;
             order.Address = orders.Address;
             order.PaymentType = orders.PaymentType;
             order.Description = orders.Description;
             order.OrderStatus = 0;
-            //SOFEntity.getDb().Orders.Attach(order);
-
-            //SOFEntity.getDb().Entry(orders).State = EntityState.Modified;
-            //SOFEntity.getDb().SaveChanges();
-
-
 
 
             var newOrder = new SOF301.Models.Orders();
@@ -269,17 +269,17 @@ namespace SOF301.Controllers
             var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
 
 
-            var orders = SOFEntity.getDb().Orders.Where(o => o.UserID == userID && (o.OrderStatus==0 || o.OrderStatus ==1 || o.OrderStatus == 2 ));
+            var orders = SOFEntity.getDb().Orders.Where(o => o.UserID == userID && (o.OrderStatus == 0 || o.OrderStatus == 1 || o.OrderStatus == 2));
             return View(orders.ToList());
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Profile(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-         //   var OrderID = SOFEntity.getDb().OrderItems.Find(id).OrderID;
+            //   var OrderID = SOFEntity.getDb().OrderItems.Find(id).OrderID;
             var list = SOFEntity.getDb().OrderItems.Where(o => o.OrderID == id).ToList();
 
             return View(list);

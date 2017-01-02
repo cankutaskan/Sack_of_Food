@@ -27,8 +27,7 @@ namespace SOF301.Models
         [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "User name has invalid characters.")]
         public string UserName { get; set; }
 
-        [Required]
-        [StringLength(24, MinimumLength = 8, ErrorMessage = "Password must between 8 and 24 characters.")]
+        [Required]  
         [DataType(DataType.Password, ErrorMessage = "Password is invalid.")]
         public string Password { get; set; }
 
@@ -41,6 +40,7 @@ namespace SOF301.Models
         public string Surname { get; set; }
 
         [StringLength(11)]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Phone number has invalid characters.")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid phone number.")]
         public string Telephone { get; set; }
 

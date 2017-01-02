@@ -19,7 +19,7 @@ namespace SOF301.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Orders");
         }
 
         // GET: Restaurants/Details/5

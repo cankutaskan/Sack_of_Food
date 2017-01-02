@@ -10,7 +10,22 @@ namespace SOF301.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("3"))
+                {
+                    return RedirectToAction("Index", "Customer");
+                }
+                if (User.IsInRole("2"))
+                {
+                    return RedirectToAction("Index", "RestaurantOwner");
+                }
+                if (User.IsInRole("1"))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+            }
+            return RedirectToAction("Login", "Auth");
         }
 
         public ActionResult About()

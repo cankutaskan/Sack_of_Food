@@ -7,13 +7,13 @@
 
 <h1>Register</h1>
 
-@Html.ValidationSummary(true)
+@*@Html.ValidationSummary(true)*@
 
 <div class="loginForm container">
     <div class="col-md-8 col-md-offset-2">
         @using (Html.BeginForm())
         {
-
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="col-md-4">
 
                <div class="form-box">
@@ -31,7 +31,7 @@
                         </div>
                         <div class="form-group">
                             @Html.ValidationMessageFor(model => model.Users.Email, "", new { @class = "bg-primary" })
-                            @Html.TextBoxFor(u => u.Users.Email, new { @placeholder = "Email", @class = "form-control" })
+                            @Html.EditorFor(model => model.Users.Email, new { htmlAttributes = new { @class = "form-control", @placeholder="Email" } })
 
                         </div>
                         <div class="form-group">
@@ -45,7 +45,7 @@
                         </div>
                         <div class="form-group">
                             @Html.ValidationMessageFor(model => model.Users.Telephone, "", new { @class = "bg-primary" })
-                            @Html.TextBoxFor(u => u.Users.Telephone, new { @placeholder = "Telephone", @class = "form-control" })
+                            @Html.EditorFor(model => model.Users.Telephone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Phone Number", @type="number" } })
                         </div>
                         <div class="form-group">
                             @Html.ValidationMessageFor(model => model.Users.Address, "", new { @class = "bg-primary" })
@@ -124,6 +124,18 @@
     </div>
 </div>
 <style>
+    input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+
+
+
+
+
     img {
         max-width: 100%;
     }
