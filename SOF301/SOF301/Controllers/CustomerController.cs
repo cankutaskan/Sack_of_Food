@@ -160,6 +160,30 @@ namespace SOF301.Controllers
             return PartialView(basket);
         }
 
+        public ActionResult removeBasket(int FoodID)
+        {
+            int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
+            var temp = SOFEntity.getDb().OrderItems.Where(o => o.Orders.UserID == user && o.Orders.OrderStatus == null).ToList();
+            var orderItem = temp.Where(o => o.FoodID == FoodID).FirstOrDefault();
+        
+
+            try
+            {
+                SOFEntity.getDb().OrderItems.Remove(orderItem);
+                SOFEntity.getDb().SaveChanges();
+
+            }
+            catch(Exception e)
+            {
+
+
+
+            }
+            var basket = SOFEntity.getDb().OrderItems.Where(o => o.Orders.UserID == user && o.Orders.OrderStatus == null).ToList();
+
+            return PartialView("ItemBasket", basket);
+        }
+
         public ActionResult ClearBasket()
         {
             int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);

@@ -87,10 +87,10 @@
                 @Html.LabelFor(model => model.PaymentType, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <label>
-                        Cash   @Html.RadioButtonFor(model => model.PaymentType, true, new { @checked = "checked" })
+                        Cash   @Html.RadioButtonFor(model => model.PaymentType, "true", new { @checked = "checked" })
 
 
-                        Credit @Html.RadioButtonFor(model => model.PaymentType, false)
+                        Credit @Html.RadioButtonFor(model => model.PaymentType, "false")
                     </label>
                 </div>
 
@@ -253,7 +253,7 @@
 
         var ptype = $('input[name="PaymentType"]:checked').val();
 
-        if (ptype == 1) {
+        if (ptype == "true") {
 
             $(".creditInfo").hide();
 

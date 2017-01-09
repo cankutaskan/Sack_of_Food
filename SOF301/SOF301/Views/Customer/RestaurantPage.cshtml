@@ -156,5 +156,20 @@
     });
 
 
+    $(document).on("click", ".remove", function () {
+        var temp = $(this).closest('div').find('.hidenID').text();
+        $.ajax({
+            url: "/Customer/removeBasket/?FoodID=" + temp,
+            datatype: "text",
+            type: "GET",
+            success: function (data) {
+                $('#partial').html(data);
+            },
+            error: function () {
+                $("#partial").html("ERROR");
+            }
+        });
+    });
+
 
 </script>
