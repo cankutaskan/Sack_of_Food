@@ -41,6 +41,7 @@
 
                                         <span class="hidenID">@item.FoodID</span>
 
+                                        <input type="text" class="amount" size="4" value="1" />
                                     </div>
                                     @Html.DisplayFor(modelItem => item.Name)
 
@@ -98,9 +99,11 @@
         });
         $(".add").click(function () {
             var id = $(this).closest('div').find('.hidenID').text();
+            //var amount=  document.getElementsByClassName('amount')[0].value;
+            var amount = $(this).closest('div').find('.amount').val();
             $('.hidenID').hide() //**hide your span
             $.ajax({
-                url: "/Customer/ItemBasket/?FoodID=" + id,
+                url: "/Customer/ItemBasket/?FoodID=" + id + "&amount=" + amount,
                 datatype: "text",
                 type: "GET",
                 success: function (data) {

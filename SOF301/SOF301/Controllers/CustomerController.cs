@@ -133,7 +133,7 @@ namespace SOF301.Controllers
             return PartialView("ItemBasket", basket);
         }
 
-        public ActionResult ItemBasket(int? FoodID)
+        public ActionResult ItemBasket(int? FoodID, int? amount)
         {
             int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
             var order = SOFEntity.getDb().Orders.Where(o => o.UserID == user && o.OrderStatus == null).FirstOrDefault();
@@ -142,14 +142,26 @@ namespace SOF301.Controllers
 
 
             }
-            var orderItem = new SOF301.Models.OrderItems();
-            orderItem.FoodID = FoodID;
-            orderItem.OrderID = order.OrderID;
+            for(int i = 0; i < amount; i++)
+            {
+                var orderItem = new SOF301.Models.OrderItems();
+                orderItem.FoodID = FoodID;
+                orderItem.OrderID = order.OrderID;
+
+                SOFEntity.getDb().OrderItems.Add(orderItem);
+
+            }
+
+
+
+            //var orderItem = new SOF301.Models.OrderItems();
+            //orderItem.FoodID = FoodID;
+            //orderItem.OrderID = order.OrderID;
             try
             {
 
 
-                SOFEntity.getDb().OrderItems.Add(orderItem);
+               
                 SOFEntity.getDb().SaveChanges();
             }
             catch (Exception e)
