@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,7 +16,7 @@ namespace SOF301.Controllers
     [Authorize(Roles = "2,1")]
     public class RestaurantOwnerController : Controller
     {
-       
+
 
         public ActionResult Index()
         {
@@ -25,20 +26,20 @@ namespace SOF301.Controllers
         // GET: Restaurants/Details/5
         public ActionResult Details(int? id)
         {
-          
+
             var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
 
             id = new SofModel().Restaurants
-                 .Where(u => u.UserID==userID)
+                 .Where(u => u.UserID == userID)
                  .Select(u => u.RestaurantID).FirstOrDefault();
 
-         
 
-          Restaurants res = SOFEntity.getDb().Restaurants.Find(id);
+
+            Restaurants res = SOFEntity.getDb().Restaurants.Find(id);
 
             return View(res);
         }
-        
+
         // GET: Restaurants/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -56,7 +57,7 @@ namespace SOF301.Controllers
             ViewBag.UserID = new SelectList(SOFEntity.getDb().Users, "UserID", "UserName", restaurants.UserID);
             return View(restaurants);
         }
-        
+
         [HttpPost]
         public ActionResult Edit([Bind(Include = "RestaurantID,Name,CityID,DistrictID,Address,UserID,StartingHour,FinishingHour,RestaurantStatu")] Restaurants restaurants)
         {
@@ -96,9 +97,9 @@ namespace SOF301.Controllers
         {
             var userID = int.Parse(ClaimsPrincipal.Current.FindAll(ClaimTypes.Sid).ToList()[0].Value);
 
-           int id = new SofModel().Restaurants
-                .Where(u => u.UserID == userID)
-                .Select(u => u.RestaurantID).FirstOrDefault();
+            int id = new SofModel().Restaurants
+                 .Where(u => u.UserID == userID)
+                 .Select(u => u.RestaurantID).FirstOrDefault();
 
 
             var orders = SOFEntity.getDb().Orders.Where(o => o.RestaurantID == id && o.OrderStatus == 0);
@@ -167,7 +168,7 @@ namespace SOF301.Controllers
         }
 
 
-        
+
         // GET: Foods/Create
         public ActionResult FoodCreate()
         {
@@ -246,10 +247,10 @@ namespace SOF301.Controllers
                 Foods food = SOFEntity.getDb().Foods.Find(id);
 
 
-                
+
                 SOFEntity.getDb().Foods.Remove(food);
 
-              
+
                 SOFEntity.getDb().SaveChanges();
 
 
@@ -257,9 +258,9 @@ namespace SOF301.Controllers
             return RedirectToAction("FoodIndex");
         }
 
-  
 
-   
-        
+
+
+
     }
 }
