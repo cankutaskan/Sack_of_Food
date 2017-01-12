@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,11 +17,12 @@ namespace SOF301.Controllers
     {
 
 
-        public ActionResult Index(String sortOrder, string currentFilter, string searchString, int? page, string SearchBy,string CityID ,string DistrictID)
+
+        public ActionResult Index(String sortOrder, string currentFilter, string searchString, int? page, string SearchBy, string CityID, string DistrictID)
 
         {
 
-           
+
 
             int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
 
@@ -56,18 +58,18 @@ namespace SOF301.Controllers
 
 
             switch (SearchBy)
-                {
+            {
 
-                    case "0":
+                case "0":
 
-                        if (!String.IsNullOrEmpty(searchString))
-                        {
-                            restaurant = restaurant.Where(r => r.Name.Contains(searchString));
-                        }
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        restaurant = restaurant.Where(r => r.Name.Contains(searchString));
+                    }
 
-                       
 
-                        break;
+
+                    break;
 
                 case "1":
 
@@ -84,24 +86,24 @@ namespace SOF301.Controllers
                     restaurant = restaurant.Where(r => r.DistrictID == dID);
 
 
-                        break;
-
-                    
-
-
-                    default:
-
-
-
-                        break;
+                    break;
 
 
 
 
-                }
+                default:
 
 
-            
+
+                    break;
+
+
+
+
+            }
+
+
+
 
             switch (sortOrder)
             {
@@ -118,7 +120,7 @@ namespace SOF301.Controllers
             items.Add(new SelectListItem { Text = "Name", Value = "0", Selected = true });
             items.Add(new SelectListItem { Text = "City", Value = "1" });
             items.Add(new SelectListItem { Text = "District", Value = "2" });
-            
+
 
 
 
@@ -187,7 +189,7 @@ namespace SOF301.Controllers
 
 
             }
-            for(int i = 0; i < amount; i++)
+            for (int i = 0; i < amount; i++)
             {
                 var orderItem = new SOF301.Models.OrderItems();
                 orderItem.FoodID = FoodID;
@@ -206,7 +208,7 @@ namespace SOF301.Controllers
             {
 
 
-               
+
                 SOFEntity.getDb().SaveChanges();
             }
             catch (Exception e)
@@ -222,7 +224,7 @@ namespace SOF301.Controllers
             int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
             var temp = SOFEntity.getDb().OrderItems.Where(o => o.Orders.UserID == user && o.Orders.OrderStatus == null).ToList();
             var orderItem = temp.Where(o => o.FoodID == FoodID).FirstOrDefault();
-        
+
 
             try
             {
@@ -230,7 +232,7 @@ namespace SOF301.Controllers
                 SOFEntity.getDb().SaveChanges();
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
 
@@ -306,7 +308,7 @@ namespace SOF301.Controllers
 
             int userID = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
 
-          
+
             var user = SOFEntity.getDb().Users.Find(userID);
 
             DateTime current = DateTime.Now;

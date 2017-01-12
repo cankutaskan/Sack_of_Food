@@ -63,15 +63,16 @@ namespace SOF301.Controllers
 
 
                             }
-                         try
+
+                            try
                             {
 
-                            
-                            SOFEntity.getDb().Orders.Remove(item);
-                            SOFEntity.getDb().SaveChanges();
+
+                                SOFEntity.getDb().Orders.Remove(item);
+                                SOFEntity.getDb().SaveChanges();
 
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
 
 
