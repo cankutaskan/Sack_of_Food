@@ -315,9 +315,16 @@ namespace SOF301.Controllers
         [HttpPost]
         public ActionResult EditUser([Bind(Include = "UserID,RoleID,UserName,Password,Name,Surname,Telephone,Address,CityID,DistrictID,Email")] Users users)
         {
+            if (ModelState.IsValid)
             {
 
+                Users originalUser = SOFEntity.getDb().Users.Find(users.UserID);
+                users.Password = CustomEnrypt.Encrypt(users.Password);
+                SOFEntity.getDb().Entry(originalUser).CurrentValues.SetValues(users);
+                //SOFEntity.getDb().Entry(users).State = EntityState.Modified;
 
+                SOFEntity.getDb().SaveChanges();
+                return RedirectToAction("Profile");
             }
             ViewBag.CityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name", users.CityID);
             ViewBag.RoleID = new SelectList(SOFEntity.getDb().Roles, "RoleID", "Name", users.RoleID);

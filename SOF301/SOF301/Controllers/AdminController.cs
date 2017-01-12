@@ -91,7 +91,7 @@ namespace SOF301.Controllers
                     SOFEntity.getDb().Users.Remove(u);
                     try
                     {
-                        //SOFEntity.getDb().SaveChanges();
+                        SOFEntity.getDb().SaveChanges();
                     }
                     catch (DbEntityValidationException dbEx)
                     {
@@ -120,7 +120,7 @@ namespace SOF301.Controllers
                 if (u != null)
                 {
                     SOFEntity.getDb().Restaurants.Remove(u);
-                    //SOFEntity.getDb().SaveChanges();
+                    SOFEntity.getDb().SaveChanges();
                 }
             }
             return RedirectToAction("ListRestaurants");
