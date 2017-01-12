@@ -309,7 +309,7 @@ namespace SOF301.Controllers
             return View(orders.ToList());
         }
 
-        public ActionResult Profile(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
