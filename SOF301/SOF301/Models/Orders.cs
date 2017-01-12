@@ -32,7 +32,7 @@ namespace SOF301.Models
         public bool? PaymentType { get; set; }
 
 
-        [StringLength(256, MinimumLength = 8, ErrorMessage = "Order description must between 8 and 256 characters.")]
+        [StringLength(256, ErrorMessage = "Order description must max 256 characters.")]
         public string Description { get; set; }
 
         public byte? OrderStatus { get; set; }

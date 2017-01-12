@@ -258,9 +258,10 @@ namespace SOF301.Controllers
         public ActionResult Payment([Bind(Include = "TotalPrice,Address,PaymentType,Description")] Orders orders)
         {
 
+
             int userID = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
 
-
+          
             var user = SOFEntity.getDb().Users.Find(userID);
 
             DateTime current = DateTime.Now;
