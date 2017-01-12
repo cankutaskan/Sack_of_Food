@@ -17,8 +17,7 @@ namespace SOF301.Controllers
     {
 
 
-
-        public ActionResult Index(String sortOrder, string currentFilter, string searchString, int? page, string SearchBy, string CityID, string DistrictID)
+      public ActionResult Index(String sortOrder, string currentFilter, string searchString, int? page, string SearchBy, string CityID, string DistrictID)
 
         {
 
@@ -156,10 +155,8 @@ namespace SOF301.Controllers
 
             return Json(new SelectList(ls, "Value", "Text"));
         }
-
-
-
-
+        
+        
         [HttpGet]
         public ActionResult RestaurantPage(int? RestaurantID)
         {
