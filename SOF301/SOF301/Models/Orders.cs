@@ -26,7 +26,7 @@ namespace SOF301.Models
         [StringLength(11)]
         public string Telephone { get; set; }
         
-        [StringLength(256, MinimumLength = 8, ErrorMessage = "Order address must between 8 and 256 characters.")]
+        [StringLength(256, ErrorMessage = "Order address must between 8 and 256 characters.")]
         public string Address { get; set; }
 
         public bool? PaymentType { get; set; }
