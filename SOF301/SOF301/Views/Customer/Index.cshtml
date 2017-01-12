@@ -9,23 +9,9 @@
 @using (Html.BeginForm("Index", "Customer", FormMethod.Get))
 {
 
-    <div class="form-group">
-        @Html.DropDownList("SearchBy", ViewBag.Filter as IEnumerable<SelectListItem>, new { @class = "form-control col-md-2" })
-        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control  col-md-2", @placeholder = "Enter your search" })
-
-        <div class="container">
-            <div class="form-group col-md-2">
-                @*@Html.DropDownListFor(modelItem=> ViewBag.UserCityID as IEnumerable<SelectListItem>, new { @placeholder = "City", @class = "form-control" })*@
-                @Html.DropDownList("CityID", ViewBag.UserCityID as IEnumerable<SelectListItem>, new { @placeholder = "City", @class = "form-control" })
-            </div>
-
-            <div class="form-group col-md-2">
-
-
-                @Html.DropDownList("DistrictID", ViewBag.UserDistrictID as IEnumerable<SelectListItem>, new { @placeholder = "District", @class = "form-control" })
-            </div>
-
-        </div>
+        <div class="form-group">
+            @Html.DropDownList("SearchBy", ViewBag.Filter as IEnumerable<SelectListItem>, new { @class = "form-control col-md-2" })
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new  { @class = "form-control  col-md-2", @placeholder="Enter your search"} )
             <input type="submit" value="Search" class="btn btn-primary" />  
 
         </div>
@@ -84,80 +70,3 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
-
-
-
-
-<script>
-
-
-
-
-    $(document).ready(function () {
-        //Dropdownlist Selectedchange event
-        $("#CityID").change(function () {
-            $("#DistrictID").empty();
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("GetDistrict")', // we are calling json method
-
-                dataType: 'json',
-
-                data: { id: $("#CityID").val() },
-                // here we are get value of selected country and passing same value  as inputto json method GetStates.
-
-
-                success: function (districts) {
-                    // states contains the JSON formatted list
-                    // of states passed from the controller
-
-                    $.each(districts, function (i, district) {
-                        $("#DistrictID").append('<option value="' + district.Value + '">' +
-                             district.Text + '</option>');
-                        // here we are adding option for States
-
-                    });
-                },
-                error: function (ex) {
-                    alert('Failed to retrieve states.' + ex);
-                }
-            });
-            return false;
-        })
-    });
-
-    $(document).ready(function () {
-        $("#SearchBy").val("0");
-        $("#SearchString").show();
-        $("#CityID").hide();
-        $("#DistrictID").hide();
-    
-    });
-
-    $("#SearchBy").change(function () {
-        var type = this.value;
-       
-        if (type == "0") {
-            $("#SearchString").show();
-            $("#DistrictID").hide();
-            $("#CityID").hide();
-
-        }
-        else if(type=="1"){
-            $("#CityID").show();
-            $("#DistrictID").hide();
-            $("#SearchString").hide();
-
-        }
-        else {
-            $("#CityID").show();
-            $("#DistrictID").show();
-            $("#SearchString").hide();
-        }
-
-        
-    });
-
-
-
-</script>

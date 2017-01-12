@@ -16,11 +16,8 @@ namespace SOF301.Controllers
     {
 
 
-        public ActionResult Index(String sortOrder, string currentFilter, string searchString, int? page, string SearchBy,string CityID ,string DistrictID)
-
+        public ActionResult Index(String sortOrder, string currentFilter, string searchString, int? page, string SearchBy)
         {
-
-           
 
             int user = int.Parse(ClaimsPrincipal.Current.FindFirst(ClaimTypes.Sid).Value);
 
@@ -43,55 +40,40 @@ namespace SOF301.Controllers
             var restaurant = from res in SOFEntity.getDb().Restaurants
                              where res.CityID == cityID
                              select res;
-
-
-            ViewBag.UserCityID = new SelectList(SOFEntity.getDb().Cities, "CityID", "Name");
-
-            ViewBag.UserDistrictID = new SelectList(SOFEntity.getDb().Districts, "DistrictID", "Name");
+        
 
 
 
 
-            //   restaurant = restaurant.Where(r => r.Name.Contains(searchString));
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
 
 
-            switch (SearchBy)
+                //   restaurant = restaurant.Where(r => r.Name.Contains(searchString));
+
+
+                switch (SearchBy)
                 {
 
                     case "0":
-
-                        if (!String.IsNullOrEmpty(searchString))
-                        {
-                            restaurant = restaurant.Where(r => r.Name.Contains(searchString));
-                        }
-
-                       
+                        restaurant = restaurant.Where(r => r.Name.Contains(searchString));
 
                         break;
 
-                case "1":
-
-                    int cID = int.Parse(CityID);
 
 
-                    restaurant = restaurant.Where(r => r.CityID == cID);
+                    case "1":
 
-                    break;
 
-                case "2":
-
-                    int dID = int.Parse(DistrictID);
-                    restaurant = restaurant.Where(r => r.DistrictID == dID);
-
+                        restaurant = restaurant.Where(r => r.Districts.Name.Contains(searchString));
 
                         break;
 
-                    
+
 
 
                     default:
-
-
 
                         break;
 
@@ -101,7 +83,7 @@ namespace SOF301.Controllers
                 }
 
 
-            
+            }
 
             switch (sortOrder)
             {
@@ -116,9 +98,8 @@ namespace SOF301.Controllers
             List<SelectListItem> items = new List<SelectListItem>();
 
             items.Add(new SelectListItem { Text = "Name", Value = "0", Selected = true });
-            items.Add(new SelectListItem { Text = "City", Value = "1" });
-            items.Add(new SelectListItem { Text = "District", Value = "2" });
-            
+
+            items.Add(new SelectListItem { Text = "District", Value = "1" });
 
 
 
@@ -131,32 +112,6 @@ namespace SOF301.Controllers
 
             return View(restaurant.ToPagedList(pageNumber, pageSize));
         }
-
-
-        [HttpPost]
-        public JsonResult GetDistrict(string id)
-        {
-            //   List<SelectListItem> districts = new List<SelectListItem>();
-
-            int ID = int.Parse(id);
-            var districts = SOFEntity.getDb().Districts.Where(d => d.CityID == ID);
-            //  List<SelectList> district = new List(districts, "DistrictID", "Name");
-            List<SelectListItem> ls = new List<SelectListItem>();
-
-            foreach (var temp in districts)
-            {
-
-                ls.Add(new SelectListItem() { Text = temp.Name, Value = temp.DistrictID.ToString() });
-            }
-
-
-
-
-            return Json(new SelectList(ls, "Value", "Text"));
-        }
-
-
-
 
         [HttpGet]
         public ActionResult RestaurantPage(int? RestaurantID)
