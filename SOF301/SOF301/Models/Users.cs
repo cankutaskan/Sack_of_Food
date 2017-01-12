@@ -22,7 +22,7 @@ namespace SOF301.Models
         public int? RoleID { get; set; }
 
         [Required]
-        [StringLength(20,MinimumLength = 8,ErrorMessage = "User name must between 8 and 20 characters.")]
+        [StringLength(20,MinimumLength = 8,ErrorMessage = "User name must between 8 and 36 characters.")]
         [DataType(DataType.Text,ErrorMessage = "User name has invalid characters.")]
         [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "User name has invalid characters.")]
         public string UserName { get; set; }
