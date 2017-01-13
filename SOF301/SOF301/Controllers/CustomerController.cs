@@ -88,11 +88,29 @@ namespace SOF301.Controllers
                     break;
 
 
+                case "3":
 
+                    int ccID = int.Parse(CityID);
+
+
+                
+
+
+                    int ddID = int.Parse(DistrictID);
+
+
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        restaurant = restaurant.Where(r => r.Name.Contains(searchString) && r.CityID==ccID && r.DistrictID == ddID);
+                    }
+
+
+
+                    break;
 
                 default:
 
-
+                  
 
                     break;
 
@@ -119,7 +137,7 @@ namespace SOF301.Controllers
             items.Add(new SelectListItem { Text = "Name", Value = "0", Selected = true });
             items.Add(new SelectListItem { Text = "City", Value = "1" });
             items.Add(new SelectListItem { Text = "District", Value = "2" });
-
+            items.Add(new SelectListItem { Text = "All Fields", Value = "3" });
 
 
 

@@ -50,7 +50,14 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PaymentType)
+                @if (!(bool)item.PaymentType)
+                {
+                    <p>Credit Card</p>
+                }
+                else
+                {
+                    <p>Cash</p>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)

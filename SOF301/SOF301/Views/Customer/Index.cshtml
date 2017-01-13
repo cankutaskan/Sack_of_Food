@@ -154,10 +154,20 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
             $("#SearchString").hide();
 
         }
-        else {
+
+            
+        else if(type=="2") {
             $("#CityID").show();
             $("#DistrictID").show();
             $("#SearchString").hide();
+        }
+
+        else {
+            $("#CityID").show();
+            $("#DistrictID").show();
+            $("#SearchString").show();
+
+
         }
 
 
